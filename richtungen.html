@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meditationswege im Vergleich — Philosophie, Schriften & Synthese</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0c0f14;
+      --bg-surface: #141922;
+      --bg-surface-elevated: #1b222e;
+      --bg-card: #161d28;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(212, 175, 55, 0.35);
+      --text-main: #f0f3f8;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      --gold-primary: #d4af37;
+      --gold-hover: #f3cf65;
+      --gold-soft: rgba(212, 175, 55, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-card: 0 12px 30px -6px rgba(0, 0, 0, 0.6);
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 100px;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .top-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(12, 15, 20, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.15rem; }
+    .brand-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--gold-primary), #9a781b);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      color: #0c0f14; font-weight: 800; font-size: 1rem;
+    }
+    .nav-center { display: flex; align-items: center; gap: 10px; overflow-x: auto; max-width: 55%; }
+    .nav-pill {
+      font-size: 0.8rem; font-weight: 600; padding: 6px 14px; border-radius: 20px;
+      background: var(--bg-surface-elevated); color: var(--text-muted);
+      border: 1px solid var(--border-subtle); white-space: nowrap; transition: var(--transition);
+    }
+    .nav-pill:hover { color: var(--gold-hover); border-color: var(--gold-primary); background: var(--gold-soft); }
+
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .lang-switcher {
+      display: inline-flex; align-items: center;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px; padding: 2px;
+    }
+    .lang-btn {
+      background: transparent; border: none; color: var(--text-muted);
+      padding: 5px 11px; border-radius: 16px; font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; transition: var(--transition); font-family: inherit;
+    }
+    .lang-btn.active { background: var(--gold-primary); color: #0c0f14; }
+
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 16px; border-radius: 30px; font-size: 0.82rem; font-weight: 600;
+      border: 1px solid var(--border-subtle); color: var(--text-muted); transition: var(--transition);
+      cursor: pointer; background: transparent; font-family: inherit;
+    }
+    .btn-back:hover { border-color: var(--gold-primary); color: #fff; }
+
+    .hero-banner {
+      position: relative;
+      background: radial-gradient(circle at 50% 25%, #1c2436 0%, #0c0f14 85%);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 75px 24px 60px; text-align: center;
+    }
+    .hero-subtitle {
+      text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.25em;
+      color: var(--gold-primary); font-weight: 600; margin-bottom: 12px;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif; font-size: clamp(2.3rem, 5vw, 3.8rem);
+      font-weight: 700; color: #fff; margin-bottom: 16px; line-height: 1.2;
+    }
+    .hero-desc { max-width: 820px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem; }
+
+    .container { max-width: 1040px; margin: 50px auto 0; padding: 0 20px; }
+
+    .tradition-block {
+      background: var(--bg-surface); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: 44px 40px; margin-bottom: 60px;
+      scroll-margin-top: 90px; position: relative; box-shadow: var(--shadow-card);
+    }
+    .tradition-block::before {
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+      background: linear-gradient(to bottom, var(--theme-color, var(--gold-primary)), transparent);
+    }
+
+    .theme-vipassana { --theme-color: #38bdf8; }
+    .theme-zen { --theme-color: #94a3b8; }
+    .theme-advaita { --theme-color: #d4af37; }
+    .theme-dzogchen { --theme-color: #a855f7; }
+    .theme-yoga { --theme-color: #10b981; }
+
+    .tradition-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      flex-wrap: wrap; gap: 14px; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 20px;
+    }
+    .tradition-title-area h2 {
+      font-family: 'Playfair Display', serif; font-size: 2.1rem; color: #fff; line-height: 1.2; margin-bottom: 6px;
+    }
+    .tradition-origin { font-size: 0.85rem; color: var(--text-subtle); font-weight: 500; }
+    .badges-wrap { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tradition-badge {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
+      border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+      background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-subtle); color: var(--text-main);
+    }
+    .tradition-badge.buddha-yes { border-color: rgba(56, 189, 248, 0.35); color: #38bdf8; }
+    .tradition-badge.buddha-no { border-color: rgba(212, 175, 55, 0.35); color: var(--gold-hover); }
+
+    .tradition-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px; margin-top: 20px;
+    }
+    .grid-box {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); padding: 22px;
+    }
+    .grid-box h3 {
+      font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--gold-hover); margin-bottom: 10px;
+    }
+    .grid-box p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.65; }
+
+    .quote-box {
+      margin-top: 24px; padding: 18px 24px; border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 3px solid var(--theme-color, var(--gold-primary));
+      font-style: italic; color: #e2e8f0; font-size: 0.98rem;
+    }
+
+    /* Philosophische Vertiefung */
+    .insights-section {
+      background: var(--bg-surface); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: 40px 36px; margin-bottom: 50px;
+      box-shadow: var(--shadow-card);
+    }
+    .insights-header { text-align: center; margin-bottom: 28px; }
+    .insights-tag {
+      text-transform: uppercase; font-size: 0.78rem; letter-spacing: 0.18em;
+      color: var(--gold-primary); font-weight: 700; margin-bottom: 8px; display: block;
+    }
+    .insights-title { font-family: 'Playfair Display', serif; font-size: 1.9rem; color: #fff; }
+    .insights-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
+    }
+    .insight-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); padding: 22px; display: flex; flex-direction: column;
+    }
+    .insight-card h4 {
+      color: var(--gold-hover); font-size: 1.05rem; margin-bottom: 10px; line-height: 1.35;
+    }
+    .insight-card p {
+      font-size: 0.9rem; color: var(--text-muted); line-height: 1.65;
+    }
+    .insight-quote {
+      margin-top: auto; padding-top: 14px; font-style: italic; font-size: 0.85rem;
+      color: #cbd5e1; border-top: 1px solid var(--border-subtle);
+    }
+
+    /* Synthese */
+    .synthesis-section {
+      background: var(--bg-surface); border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg); padding: 44px 36px; box-shadow: var(--shadow-card);
+      margin-bottom: 40px;
+    }
+    .synthesis-title {
+      font-family: 'Playfair Display', serif; font-size: 2.2rem; color: #fff;
+      text-align: center; margin-bottom: 12px;
+    }
+    .synthesis-intro {
+      text-align: center; max-width: 800px; margin: 0 auto 36px;
+      color: var(--text-muted); font-size: 1rem;
+    }
+    .comparison-table-wrap {
+      overflow-x: auto; border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); background: var(--bg-card);
+    }
+    .comparison-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
+    .comparison-table th, .comparison-table td {
+      padding: 16px 18px; border-bottom: 1px solid var(--border-subtle); vertical-align: top;
+    }
+    .comparison-table th {
+      background: var(--bg-surface-elevated); color: var(--gold-primary);
+      font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.08em;
+    }
+    .comparison-table tr:hover td { background: rgba(255, 255, 255, 0.015); }
+    .comparison-table td strong { color: #fff; display: block; margin-bottom: 4px; }
+
+    .overlaps-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px; margin-top: 36px;
+    }
+    .overlap-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); padding: 22px;
+    }
+    .overlap-card h4 { color: var(--gold-primary); font-size: 1.05rem; margin-bottom: 8px; }
+    .overlap-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+    @media (max-width: 768px) {
+      .tradition-block, .insights-section, .synthesis-section { padding: 26px 18px; }
+      .nav-center { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="top-bar">
+    <div class="brand">
+      <div class="brand-icon">ॐ</div>
+      <div id="brandLabel">Traditionen des Geistes</div>
+    </div>
+    
+    <nav class="nav-center">
+      <a href="#vipassana" class="nav-pill">Vipassana</a>
+      <a href="#zen" class="nav-pill">Zen</a>
+      <a href="#advaita" class="nav-pill">Advaita</a>
+      <a href="#dzogchen" class="nav-pill">Dzogchen</a>
+      <a href="#raja-yoga" class="nav-pill">Raja Yoga</a>
+      <a href="#insights" class="nav-pill" id="navInsights">Vertiefung</a>
+      <a href="#synthese" class="nav-pill" style="border-color: var(--border-accent); color: var(--gold-primary);" id="navSynthese">Synthese</a>
+    </nav>
+
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="btnDE" onclick="setLanguage('de')">DE</button>
+        <button class="lang-btn" id="btnFR" onclick="setLanguage('fr')">FR</button>
+      </div>
+
+      <button type="button" class="btn-back" onclick="window.location.href='./index.html';">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        <span id="backToMediathek">Mediathek</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="hero-banner">
+    <div class="hero-subtitle" id="heroSub">Philosophischer & Praktischer Kompass</div>
+    <h1 class="hero-title" id="heroTitle">Die Wege zur Erkenntnis</h1>
+    <p class="hero-desc" id="heroDesc">Ein systematischer Vergleich: Ursprung, kanonische Schriften, Bezug zur Buddha-Lehre und die Überwindung des Egos.</p>
+  </section>
+
+  <main class="container" id="contentArea">
+    <!-- Dynamischer Inhalt -->
+  </main>
+
+  <script>
+    let currentLang = localStorage.getItem("app_lang") || "de";
+
+    const content = {
+      de: {
+        brand: "Traditionen des Geistes",
+        navInsights: "Vertiefung",
+        syntheseNav: "Synthese & Ego",
+        backBtn: "Zurück zur Mediathek",
+        heroSub: "Philosophischer & Praktischer Kompass",
+        heroTitle: "Die Wege zur Erkenntnis",
+        heroDesc: "Ein systematischer Vergleich: Ursprung, kanonische Schriften, Bezug zur Buddha-Lehre und die Überwindung des Egos.",
+        hOrigin: "Herkunft & Wurzeln",
+        hPhil: "Philosophischer Hintergrund",
+        hPrac: "Kern der Meditationspraxis",
+        hTexts: "Maßgebliche Schriften",
+        hBuddhaRel: "Konkreter Bezug zu Buddha",
+        sections: [
+          {
+            id: "vipassana",
+            cls: "theme-vipassana",
+            badge: "Analytisch-Phänomenologisch",
+            buddhaBadge: "✓ Bezieht sich direkt auf Buddha",
+            buddhaClass: "buddha-yes",
+            title: "1. Vipassana-Meditation",
+            origin: "Indien / Theravada-Buddhismus (vor ca. 2.500 Jahren)",
+            p1: "Vipassana (Pali für „Klarsehen“) gilt als die historische Meditationspraxis von Siddhartha Gautama. Jahrhundertelang in den Klöstern Myanmars, Thailands und Sri Lankas bewahrt, wurde sie durch S. N. Goenka und Mahasi Sayadaw weltweit bekannt.",
+            p2: "Das Fundament bilden die Drei Daseinsmerkmale: Vergänglichkeit (Anicca), Leidhaftigkeit bei Anhaftung (Dukkha) und das Nicht-Vorhandensein eines festen Ichs (Anatta). Reaktionen (Gier/Abneigung) erzeugen das Leiden.",
+            p3: "Nach Atem-Bündelung an den Nasenflügeln (Anapana) scannt der Übende den Körper von Kopf bis Fuß. Alle Empfindungen werden mikroskopisch registriert, ohne Reaktion. Die Schulung liegt im tiefen Gleichmut (Upekkha).",
+            p4: "Pali-Kanon (Tipitaka), insbesondere das Satipatthāna Sutta & Mahāsatipatthāna Sutta (Die vier Grundlagen der Achtsamkeit) sowie das monumentale Kommentarwerk Visuddhimagga („Der Weg zur Reinheit“) von Buddhaghosa.",
+            buddhaRel: "Direkter historischer Urheber: Die Texte gelten als die wortgetreue Aufzeichnung der Lehrreden, die Siddhartha Gautama selbst nach seiner Erleuchtung seinen Schülern diktierte.",
+            quote: "„Beobachten Sie die Realität so, wie sie sich im jeweiligen Moment manifestiert – nicht so, wie Sie sie gerne hätten.“ — S. N. Goenka"
+          },
+          {
+            id: "zen",
+            cls: "theme-zen",
+            badge: "Radikaler Minimalismus",
+            buddhaBadge: "✓ Mahayana-Buddhismus (Buddha-Natur)",
+            buddhaClass: "buddha-yes",
+            title: "2. Zen-Meditation (Zazen)",
+            origin: "China (Chan, 6. Jh., Bodhidharma) via Japan (Dōgen Zenji, Rinzai & Sōtō)",
+            p1: "Aus der Begegnung des Mahayana-Buddhismus mit dem chinesischen Daoismus entstanden. Zen verzichtet bewusst auf theologische Theorien: Es ist eine direkte Übertragung von Herz zu Herz jenseits von Worten und Schriften.",
+            p2: "Zentral ist die allen Wesen innewohnende Buddha-Natur (Tathagatagarbha) und die absolute Leere (Shunyata). Erleuchtung ist kein Fernziel, sondern der ungetrübte Urzustand des Geistes im gegenwärtigen Moment.",
+            p3: "Im Sōtō-Zen steht Shikantaza im Zentrum: das „reine, absichtslose Sitzen“ mit offenen Augen vor der Wand ohne Mantra oder Visualisierung. Im Rinzai-Zen zerschlagen paradoxe Koans das rationale Denken.",
+            p4: "1. Mahayana-Sutras: Herz-Sutra & Diamant-Sutra. 2. Zen-Patriarchen-Texte: Plattform-Sutra (Huineng), Shōbōgenzō (Dōgen), Koan-Sammlungen wie Mumonkan („Die torlose Schranke“).",
+            buddhaRel: "Zweigeteilter Bezug: Das Herz- und Diamant-Sutra fassen Buddhas Erleuchtungserfahrung (die Leerheit aller Konzepte) zusammen. Die Schriften von Huineng, Dōgen und das Mumonkan stammen von Meistern der Nachfolge; sie demonstrieren den 'lebendigen Buddha-Geist' in Aktion und basieren auf Buddhas schweigender Blumenpredigt.",
+            quote: "„Zazen ist nicht das Erlernen von Meditation. Es ist das Tor des Friedens; es ist die reine Praxis des Erwachens.“ — Eihei Dōgen"
+          },
+          {
+            id: "advaita",
+            cls: "theme-advaita",
+            badge: "Direkte Selbsterforschung",
+            buddhaBadge: "✗ Nicht buddhistisch (Vedisch / Hinduistisch)",
+            buddhaClass: "buddha-no",
+            title: "3. Advaita Vedanta (Non-Dualismus)",
+            origin: "Indien / Upanishaden, Adi Shankara (8. Jh.), Ramana Maharshi & Nisargadatta",
+            p1: "„Advaita“ bedeutet „nicht-zwei“. Ramana Maharshi und Nisargadatta Maharaj machten diese höchste vedische Weisheit als direkten Erfahrungsweg (Self-Inquiry) für die moderne Welt zugänglich.",
+            p2: "Nur das Absolute (Brahman) ist real; die Welt der getrennten Dinge ist eine Illusion (Maya). Das individuelle Selbst (Atman) ist absolut identisch mit Brahman. Leid entsteht durch die Verwechslung mit dem Körper.",
+            p3: "Atma-Vichara (Selbsterforschung): Bei jedem Gedanken fragt man: „Für wen erscheint er? – Für mich. Wer bin ich?“ Die Aufmerksamkeit wendet sich um 180 Grad zurück zum unberührten, ewigen Zeugen.",
+            p4: "Die Prasthanatrayi: Die Upanishaden (Mandukya, Chandogya, Brihadaranyaka), die Bhagavad Gita und die Brahma-Sutras; zudem die Ashtavakra Gita, Avadhuta Gita und moderne Dialoge wie „Ich bin Das“.",
+            buddhaRel: "Kein Buddha-Bezug: Entstammt der orthodoxen indischen Veda-Tradition. Erkennt Buddha nicht als Lehrer an, teilt aber die Kritik an bloßen Opferritualen und die Suche nach dem Ende allen Leidens.",
+            quote: "„Die Frage ‚Wer bin ich?‘ ist eine Fackel, die das fiktive Ich entlarvt und sich am Ende selbst verzehrt.“ — Sri Ramana Maharshi"
+          },
+          {
+            id: "dzogchen",
+            cls: "theme-dzogchen",
+            badge: "Große Vollendung",
+            buddhaBadge: "✓ Tibetischer Buddhismus (Vajrayana)",
+            buddhaClass: "buddha-yes",
+            title: "4. Dzogchen & Mahamudra",
+            origin: "Tibet / Nyingma- & Kagyu-Tradition (Padmasambhava, Tilopa, 8.–11. Jh.)",
+            p1: "Gilt in Tibet als die Krone aller buddhistischen Fahrzeuge. Verbindet philosophischen Scharfsinn mit der lebendigen, direkten Einführung in den ursprünglichen Geisteszustand.",
+            p2: "Der Geist gleicht dem grenzenlosen Raum. Alle Erscheinungen sind seine eigene Energie. Der Urzustand (Rigpa) ist von Beginn an unberührt und rein; nichts muss gereinigt oder hinzugefügt werden.",
+            p3: "Praxis der Nicht-Meditation (Trekchö): Der Geist verweilt vollkommen entspannt und weit in seiner natürlichen Frische. Gedanken lösen sich im Augenblick des Aufsteigens wie Zeichnungen im Wasser auf.",
+            p4: "Die 17 Tantras des Dzogchen (v. a. Kulayarāja Tantra), die „Sieben Schatztruhen“ (Dzö Dün) von Longchenpa sowie Tilopas Mahamudra-Verse („Ganges-Mahamudra“).",
+            buddhaRel: "Transzendenter Buddha-Bezug: Der Buddha spricht hier nicht als historische Person, sondern als 'Samantabhadra' (der Ur-Buddha, Symbol des ungeborenen, zeitlosen Bewusstseinsraums).",
+            quote: "„Lass los, was vergangen ist. Erwarte nicht, was kommen mag. Verweile in der Gegenwart, weit wie der Himmel.“ — Tilopa"
+          },
+          {
+            id: "raja-yoga",
+            cls: "theme-yoga",
+            badge: "Achtgliedriger Pfad",
+            buddhaBadge: "✗ Nicht buddhistisch (Klassischer Yoga-Zweig)",
+            buddhaClass: "buddha-no",
+            title: "5. Raja Yoga & Yoga Nidra",
+            origin: "Indien / Patanjali Yoga-Sutras (ca. 2. Jh. v. Chr. – 4. Jh. n. Chr.)",
+            p1: "Der königliche Pfad der klassischen indischen Geisteswissenschaft. Basierend auf der Samkhya-Philosophie trennt er präzise zwischen der materiellen Natur (Prakriti) und dem reinen Geist (Purusha).",
+            p2: "„Yogas chitta vritti nirodha“: Yoga ist das Stillwerden der Gedankenwellen im Geist. Kommt der See zur Ruhe, erkennt sich der Sehende (Drashta) in seiner unsterblichen, ewigen Reinheit.",
+            p3: "Stufenweise Bündelung: Vom Atem (Pranayama) über den Rückzug der Sinne (Pratyahara) zur Einpunktigkeit (Dharana) und Meditation (Dhyana), bis zur vollkommenen Stille (Samadhi).",
+            p4: "Die Yoga-Sutras von Patanjali (4 Kapitel / Padas), Samkhyakarika von Ishvarakrishna sowie als Vorbereitung die Hatha Yoga Pradipika.",
+            buddhaRel: "Kein Buddha-Bezug: Eigenständige philosophische Schule Indiens (Darshana). Zeitlich und thematisch eng mit dem frühen Buddhismus verwandt, lehrt jedoch ein ewiges, unsterbliches Bewusstseins-Subjekt (Purusha).",
+            quote: "„Wenn alle Gedankenbewegungen zur Ruhe kommen, ruht der Sehende in seiner wahren Natur.“ — Yoga Sutra 1.3"
+          }
+        ],
+        // Vertiefende Einschätzungen
+        insTag: "Philosophische Einblicke & Klärung",
+        insTitle: "Vier Kernfragen auf den Punkt gebracht",
+        insCards: [
+          {
+            t: "1. Beziehen sich alle Buddhisten immer auf Buddha-Quellen?",
+            p: "Im Prinzip ja – aber das Verständnis variiert radikal: Im Theravada zählt streng das historische Wort (Pali-Kanon). Im Zen gilt die wortlose Übertragung von Herz zu Herz (die lebendige Buddha-Natur im Jetzt). Im Dzogchen offenbart sich Buddha als Ur-Geisteszustand des gesamten Kosmos.",
+            q: "Theravada zitiert den historischen Meister, Zen lebt den Geist, Dzogchen erfährt den Urgrund."
+          },
+          {
+            t: "2. Welchen Bezug haben die Zen-Schriften zu Buddha?",
+            p: "Eine Doppel-Struktur: Das Herz- und Diamant-Sutra gelten als Buddhas eigene Worte zur Leerheit. Das Shōbōgenzō (Dōgen) und das Mumonkan stammen von Meistern und führen die 'Blumenpredigt' fort: Buddha hielt stumm eine Blume empor; nur Mahakasyapa verstand wortlos. Zen überliefert genau diesen lebendigen Geist jenseits von Buchstaben.",
+            q: "Sutras spiegeln Buddhas Einsicht; Meister-Texte zeigen, wie man selbst augenblicklich zum Buddha erwacht."
+          },
+          {
+            t: "3. Nicht-Selbst (Anatta) vs. Ego-Überwindung: Ist das dasselbe?",
+            p: "Psychologisch ja: Beide beenden das krampfhafte Kreisen um das persönliche Ich und erlösen von Leiden. Metaphysisch unterscheiden sie sich: Der Buddhist findet nach dem Schälen der Zwiebel keinen Kern („Leere“ / Niemand daheim). Der Advaitin erkennt: Das kleine Ich vergeht, aber das wahre göttliche Selbst (Atman/Brahman) ist alles („Fülle“).",
+            q: "Buddhismus sagt: „Niemand ist zu Hause.“ Advaita sagt: „Das ganze Universum ist mein Zuhause.“"
+          },
+          {
+            t: "4. Leerheit (Shunyata) & Non-Dualität: Berühren sie sich?",
+            p: "Vollkommen. Leerheit bedeutet im Buddhismus kein schwarzes Loch, sondern das Fehlen einer getrennten, isolierten Existenz. Genau das meint das non-duale Bewusstsein im Advaita: ein grenzenloser, ungeteilter Raum ohne Trennung zwischen Beobachter und Beobachtetem. Im stillen Gewahrsein verflüchtigt sich der Wortstreit.",
+            q: "Shunyata verneint die Form, Brahman bejaht das Bewusstsein — in der Stille meinen beide dasselbe Unfassbare."
+          }
+        ],
+        synTitle: "Synthese: Schnittmengen, Schriften & Ego-Überwindung",
+        synIntro: "Obwohl die Schulen verschiedene Begrifflichkeiten nutzen, teilen sie das fundamentale Ziel: Die Befreiung von der Enge des reflexhaften Egos.",
+        thTrad: "Richtung",
+        thBuddha: "Bezug zu Buddha",
+        thTexts: "Kanonische Schriften",
+        thEgo: "Status des „Egos“",
+        thGoal: "Zielerfahrung",
+        rows: [
+          { r: "Vipassana", b: "Ja (Theravada / Historischer Buddha)", t: "Pali-Kanon (Satipatthana), Visuddhimagga", e: "Illusion aus 5 vergänglichen Aggregaten (Anatta).", g: "Nibbana (Erlöschen von Gier & Abneigung)" },
+          { r: "Zen (Zazen)", b: "Ja (Mahayana / Lebendige Buddha-Natur)", t: "Herz-Sutra, Diamant-Sutra, Shōbōgenzō", e: "Fiktives Konstrukt des dualistischen Denkens.", g: "Satori (Erkennen der Buddha-Natur)" },
+          { r: "Advaita Vedanta", b: "Nein (Vedisch / Orthodox Hinduistisch)", t: "Upanishaden, Gita, Brahma-Sutras", e: "Falsche Identifikation; dahinter ruht Atman.", g: "Moksha (Einheit mit Brahman)" },
+          { r: "Dzogchen", b: "Ja (Vajrayana / Ur-Buddha Samantabhadra)", t: "17 Tantras, Schriften von Longchenpa", e: "Temporäre Verkrampfung im unendlichen Raum.", g: "Ka-dag (Ursprüngliche Reinheit)" },
+          { r: "Raja Yoga", b: "Nein (Klassischer Yoga-Weg)", t: "Yoga-Sutras von Patanjali", e: "Asmita (Ich-Macher); Verwechslung mit Gedanken.", g: "Kaivalya (Freiheit des Sehers)" }
+        ],
+        c1T: "1. Nicht-Selbst (Anatta) vs. Reines Selbst (Atman)",
+        c1P: "Der Buddhist dekonstruiert das Ich: „Da ist absolut niemand zu Hause (Leere).“ Der Advaitin weitet das Selbst aus: „Alles ist mein wahres Bewusstsein (Fülle).“ In der meditativen Praxis der Ich-Auflösung führen beide zum identischen Frieden.",
+        c2T: "2. Leerheit (Shunyata) & Non-Dualität",
+        c2P: "Leerheit bedeutet im Buddhismus kein schwarzes Nichts, sondern Abwesenheit von getrennter Eigenexistenz. Das non-duale Bewusstsein (Advaita) meint dasselbe: reine, formlose Weite ohne Spaltung in Subjekt und Objekt.",
+        c3T: "3. Graduell vs. Plötzlich",
+        c3P: "Vipassana und Yoga verfeinern den Geist Schritt für Schritt; Zen, Advaita und Dzogchen konfrontieren unmittelbar mit dem bereits vorhandenen, unveränderlichen Urzustand."
+      },
+      fr: {
+        brand: "Traditions de l'Esprit",
+        navInsights: "Éclairages",
+        syntheseNav: "Synthèse & Ego",
+        backBtn: "Retour à la médiathèque",
+        heroSub: "Boussole Philosophique & Pratique",
+        heroTitle: "Les Voies de la Connaissance",
+        heroDesc: "Comparaison méthodique : origines, textes canoniques, référence à l'enseignement du Bouddha et dépassement de l'ego.",
+        hOrigin: "Origine & Racines",
+        hPhil: "Fondement Philosophique",
+        hPrac: "Cœur de la Pratique",
+        hTexts: "Écritures de Référence",
+        hBuddhaRel: "Lien Concret avec le Bouddha",
+        sections: [
+          {
+            id: "vipassana",
+            cls: "theme-vipassana",
+            badge: "Analytique & Phénoménologique",
+            buddhaBadge: "✓ Se réfère directement au Bouddha",
+            buddhaClass: "buddha-yes",
+            title: "1. Méditation Vipassana",
+            origin: "Inde / Bouddhisme Theravada (env. 500 av. J.-C.)",
+            p1: "Vipassana (« vision claire » en pali) est la méthode historique attribuée au Bouddha. Préservée dans les monastères de Birmanie et de Thaïlande, elle a été popularisée mondialement par S. N. Goenka.",
+            p2: "Fondée sur les 3 caractéristiques de l'existence : impermanence (Anicca), insatisfaction due à l'attachement (Dukkha) et non-soi (Anatta). La réaction automatique (avidité/aversion) crée la souffrance.",
+            p3: "Après la concentration sur le souffle (Anapana), on effectue un balayage méthodique du corps. Chaque sensation est observée avec une totale équanimité (Upekkha), dissolvant les conditionnements.",
+            p4: "Le Canon Pali (Tipitaka), en particulier le Satipatthāna Sutta (les quatre fondements de l'attention) et le Visuddhimagga (« Le Chemin de la Pureté ») de Buddhaghosa.",
+            buddhaRel: "Auteur historique direct : les textes sont tenus pour les retranscriptions fidèles des discours prononcés par Siddhartha Gautama après son Éveil.",
+            quote: "« Observez la réalité telle qu'elle se présente, et non telle que vous souhaiteriez qu'elle soit. » — S. N. Goenka"
+          },
+          {
+            id: "zen",
+            cls: "theme-zen",
+            badge: "Minimalisme Radical",
+            buddhaBadge: "✓ Bouddhisme Mahayana (Nature de Bouddha)",
+            buddhaClass: "buddha-yes",
+            title: "2. Méditation Zen (Zazen)",
+            origin: "Chine (Chan, VIe s., Bodhidharma) puis Japon (Dōgen Zenji, écoles Sōtō & Rinzai)",
+            p1: "Né de la rencontre du Mahayana et du taoïsme. Le Zen écarte les spéculations intellectuelles : c'est une transmission directe d'esprit à esprit, au-delà des mots et des écritures.",
+            p2: "L'accent est mis sur la Nature de Bouddha inhérente à chacun et le vide absolu (Shunyata). L'éveil n'est pas un but futur, mais l'état naturel originel de l'esprit, ici et maintenant.",
+            p3: "Dans le Sōtō, la pratique maîtresse est Shikantaza : « simplement s'asseoir », face au mur, yeux ouverts, sans objet ni attente. Dans le Rinzai, les koans brisent la logique conceptuelle.",
+            p4: "1. Sūtras Mahāyāna : Sūtra du Cœur, Sūtra du Diamant. 2. Textes des Maîtres : Sūtra de la Plateforme (Huineng), Shōbōgenzō (Dōgen), Mumonkan (« La Porte Sans Porte »).",
+            buddhaRel: "Lien à deux niveaux : les Sūtras résument l'éveil du Bouddha (la vacuité des concepts). Les textes de Huineng, Dōgen et le Mumonkan proviennent des maîtres de la lignée ; ils prolongent le 'Sermon de la Fleur' où le Bouddha transmit silencieusement l'Éveil à Mahakasyapa.",
+            quote: "« Zazen n'est pas une méthode pour atteindre l'éveil. S'asseoir est en soi la manifestation de l'éveil. » — Eihei Dōgen"
+          },
+          {
+            id: "advaita",
+            cls: "theme-advaita",
+            badge: "Investigation Directe",
+            buddhaBadge: "✗ Non bouddhiste (Védique / Hindou)",
+            buddhaClass: "buddha-no",
+            title: "3. Advaita Vedanta (Non-Dualité)",
+            origin: "Inde / Upanishads, Adi Shankara (VIIIe s.), Ramana Maharshi & Nisargadatta",
+            p1: "« Advaita » signifie « non-deux ». Ramana Maharshi et Nisargadatta ont rendu accessible cette essence védique par une démarche directe d'investigation intérieure (Atma-Vichara).",
+            p2: "Seul l'Absolu (Brahman) est réel ; la séparation du monde est une illusion (Maya). Le Soi individuel (Atman) est identique au Brahman cosmique. La souffrance vient de l'identification au corps-mental.",
+            p3: "L'investigation du Soi : à chaque pensée surgie, on demande : « Pour qui apparaît-elle ? – Pour moi. Qui suis-je ? » L'attention se retourne à 180° vers la source pure du Témoin conscient.",
+            p4: "La Prasthanatrayi (Upanishads, Bhagavad Gita, Brahma-Sutras), l'Ashtavakra Gita, l'Avadhuta Gita et les entretiens modernes comme « Je Suis » de Nisargadatta Maharaj.",
+            buddhaRel: "Aucun lien : issu de la tradition védique orthodoxe. Ne reconnaît pas le Bouddha comme maître, mais partage la quête de la libération de la souffrance.",
+            quote: "« La question ‹ Qui suis-je ? › consume l'illusion de l'ego comme le feu consume le bois. » — Sri Ramana Maharshi"
+          },
+          {
+            id: "dzogchen",
+            cls: "theme-dzogchen",
+            badge: "Grande Perfection",
+            buddhaBadge: "✓ Bouddhisme Tibétain (Vajrayana)",
+            buddhaClass: "buddha-yes",
+            title: "4. Dzogchen & Mahamudra",
+            origin: "Tibet / Traditions Nyingma & Kagyu (Padmasambhava, Tilopa, VIIIe–XIe s.)",
+            p1: "Considéré au Tibet comme le sommet de tous les véhicules bouddhistes. Il offre une introduction directe à la clarté lumineuse de l'esprit originel.",
+            p2: "L'esprit est comparable à l'espace infini. Toute manifestation est le jeu de son énergie. L'état primordial (Rigpa) est déjà parfait, pur de tout temps ; rien n'est à purifier ni à ajouter.",
+            p3: "Pratique de la non-méditation (Trekchö) : l'esprit repose détendu dans sa fraîcheur nue. Les pensées s'auto-libèrent à l'instant même où elles apparaissent, comme des vagues dans l'océan.",
+            p4: "Les 17 Tantras du Dzogchen (dont le Kulayarāja Tantra), les « Sept Trésors » de Longchenpa et les Chants du Mahamudra de Tilopa.",
+            buddhaRel: "Lien transcendant : le Bouddha s'y manifeste non comme homme historique, mais sous la forme de 'Samantabhadra' (le Bouddha primordial, symbole de la pure présence consciente).",
+            quote: "« Ne prolonge pas le passé, n'invite pas le futur. Demeure dans la présence nue, vaste comme le ciel. » — Tilopa"
+          },
+          {
+            id: "raja-yoga",
+            cls: "theme-yoga",
+            badge: "Voie Octuple de Patanjali",
+            buddhaBadge: "✗ Non bouddhiste (Branche classique du Yoga)",
+            buddhaClass: "buddha-no",
+            title: "5. Raja Yoga & Yoga Nidra",
+            origin: "Inde / Yoga-Sutras de Patanjali (env. IIe av. J.-C. – IVe ap. J.-C.)",
+            p1: "La voie royale de la psychologie classique indienne. Fondée sur le Samkhya, elle distingue rigoureusement la matière (Prakriti) de la conscience pure éternelle (Purusha).",
+            p2: "« Yogas chitta vritti nirodha » : le yoga est l'apaisement des tourbillons du mental. Lorsque le lac de l'esprit devient calme, le Témoin (Drashta) se révèle dans sa clarté sans tache.",
+            p3: "Progression méthodique : de la respiration (Pranayama) et du retrait des sens (Pratyahara) vers la concentration unifiée (Dharana) et l'absorption méditative totale (Samadhi).",
+            p4: "Les Yoga-Sutras de Patanjali (4 chapitres / Padas), la Samkhyakarika d'Ishvarakrishna et la Hatha Yoga Pradipika en préparation corporelle.",
+            buddhaRel: "Aucun lien : système autonome (Darshana). Historiquement parallèle au bouddhisme ancien, mais enseigne l'existence d'un Soi voyant éternel (Purusha).",
+            quote: "« Alors le Témoin s'établit dans sa véritable nature. » — Yoga Sutra 1.3"
+          }
+        ],
+        insTag: "Éclairages Philosophiques",
+        insTitle: "Quatre Questions Essentielles en Synthèse",
+        insCards: [
+          {
+            t: "1. Les bouddhistes se réfèrent-ils tous aux paroles du Bouddha ?",
+            p: "En principe oui, mais la conception varie : le Theravada s'en tient rigoureusement aux textes historiques (Canon Pali). Le Zen privilégie la transmission silencieuse d'esprit à esprit (la Nature de Bouddha vivante). Le Dzogchen perçoit le Bouddha comme la nature primordiale du cosmos tout entier.",
+            q: "Le Theravada cite le maître historique, le Zen vit l'esprit, le Dzogchen réalise l'état originel."
+          },
+          {
+            t: "2. Quel est le lien entre les textes Zen et le Bouddha ?",
+            p: "Une structure double : le Sūtra du Cœur et le Sūtra du Diamant résument l'enseignement de la vacuité par le Bouddha. Le Shōbōgenzō et le Mumonkan émanent des maîtres et perpétuent le 'Sermon de la Fleur' : le Bouddha tendit une fleur en silence ; seul Mahakasyapa sourit. Le Zen transmet cet esprit vivant au-delà des mots.",
+            q: "Les Sūtras reflètent l'intuition du Bouddha ; les maîtres montrent comment s'éveiller soi-même à cet instant."
+          },
+          {
+            t: "3. Non-Soi (Anatta) et dépassement de l'ego : est-ce pareil ?",
+            p: "Psychologiquement oui : les deux libèrent de l'obsession du « moi » et mettent fin à la souffrance. Métaphysiquement, ils diffèrent : le bouddhiste ne trouve aucun centre fixe (« Vacuité »). L'advaïtin dissout l'ego illusoire pour révéler que la conscience véritable (Atman/Brahman) est tout (« Plénitude »).",
+            q: "Le bouddhisme dit : « Personne n'est là. » L'Advaita dit : « L'univers entier est ma demeure. »"
+          },
+          {
+            t: "4. Vacuité (Shunyata) et Non-Dualité : se rejoignent-elles ?",
+            p: "Parfaitement. La vacuité ne désigne pas le néant, mais l'absence d'entité isolée et séparée. C'est exactement ce que décrit la conscience non-duelle dans l'Advaita : un espace illimité sans scission sujet-objet. Dans le silence contemplatif, les querelles de vocabulaire s'évanouissent.",
+            q: "La vacuité nie la forme, le Brahman affirme la conscience — dans le silence, ils nomment la même paix."
+          }
+        ],
+        synTitle: "Synthese : Points Communs, Textes & Dépassement de l'Ego",
+        synIntro: "Malgré leurs langages respectifs, toutes ces écoles convergent : l'ego n'est pas une entité solide, mais une crispation mentale temporaire.",
+        thTrad: "Tradition",
+        thBuddha: "Lien avec Bouddha",
+        thTexts: "Textes Fondateurs",
+        thEgo: "Nature de l'Ego",
+        thGoal: "Aboutissement",
+        rows: [
+          { r: "Vipassana", b: "Oui (Theravada / Bouddha Historique)", t: "Canon Pali (Satipatthana), Visuddhimagga", e: "Agrégat sans entité centrale (Anatta).", g: "Nibbana (extinction des attachements)" },
+          { r: "Zen (Zazen)", b: "Oui (Mahayana / Esprit vivant de Bouddha)", t: "Sūtras du Cœur & Diamant, Shōbōgenzō", e: "Construction mentale artificielle.", g: "Satori (nature de Bouddha)" },
+          { r: "Advaita Vedanta", b: "Non (Védique / Hindou classique)", t: "Upanishads, Gita, Brahma-Sutras", e: "Faible identification ; au-delà repose l'Atman.", g: "Moksha (réalisation du Brahman)" },
+          { r: "Dzogchen", b: "Oui (Vajrayana / Bouddha Primordial)", t: "17 Tantras, écrits de Longchenpa", e: "Tension passagère dans l'espace ouvert.", g: "Ka-dag (pureté primordiale nue)" },
+          { r: "Raja Yoga", b: "Non (Hindou classique)", t: "Yoga-Sutras de Patanjali", e: "Asmita ; confusion avec les pensées.", g: "Kaivalya (liberté absolue de l'esprit)" }
+        ],
+        c1T: "1. Non-Soi (Anatta) vs Pur Soi (Atman)",
+        c1P: "Le bouddhiste déconstruit l'ego : « Il n'y a personne au centre (Vacuité). » L'advaïtin élargit le Soi : « Tout est ma véritable conscience (Plénitude). » Dans la pratique contemplative, les deux dissolvent l'ego dans la même paix.",
+        c2T: "2. Vacuité (Shunyata) & Non-Dualité",
+        c2P: "La vacuité ne signifie pas le néant, mais l'absence d'existence isolée et séparée. La conscience non-duelle désigne la même réalité : un espace ouvert, sans séparation sujet-objet.",
+        c3T: "3. Graduel vs Instantané",
+        c3P: "Vipassana et le Yoga affinent l'esprit pas à pas ; le Zen, l'Advaita et le Dzogchen pointent immédiatement vers la présence primordiale déjà accomplie."
+      }
+    };
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem("app_lang", lang);
+      document.documentElement.lang = lang;
+
+      document.getElementById("btnDE").classList.toggle("active", lang === "de");
+      document.getElementById("btnFR").classList.toggle("active", lang === "fr");
+
+      const t = content[lang];
+      document.getElementById("brandLabel").innerText = t.brand;
+      document.getElementById("navInsights").innerText = t.navInsights;
+      document.getElementById("navSynthese").innerText = t.syntheseNav;
+      document.getElementById("backToMediathek").innerText = t.backBtn;
+      document.getElementById("heroSub").innerText = t.heroSub;
+      document.getElementById("heroTitle").innerText = t.heroTitle;
+      document.getElementById("heroDesc").innerText = t.heroDesc;
+
+      renderPage();
+    }
+
+    function renderPage() {
+      const t = content[currentLang];
+      const area = document.getElementById("contentArea");
+
+      let html = "";
+
+      // 5 Traditionen rendern
+      t.sections.forEach(sec => {
+        html += `
+          <article class="tradition-block ${sec.cls}" id="${sec.id}">
+            <div class="tradition-header">
+              <div class="tradition-title-area">
+                <h2>${sec.title}</h2>
+                <span class="tradition-origin">${sec.origin}</span>
+              </div>
+              <div class="badges-wrap">
+                <div class="tradition-badge ${sec.buddhaClass}">${sec.buddhaBadge}</div>
+                <div class="tradition-badge">${sec.badge}</div>
+              </div>
+            </div>
+            <div class="tradition-grid">
+              <div class="grid-box">
+                <h3>${t.hOrigin}</h3>
+                <p>${sec.p1}</p>
+              </div>
+              <div class="grid-box">
+                <h3>${t.hPhil}</h3>
+                <p>${sec.p2}</p>
+              </div>
+              <div class="grid-box">
+                <h3>${t.hPrac}</h3>
+                <p>${sec.p3}</p>
+              </div>
+              <div class="grid-box">
+                <h3>${t.hTexts}</h3>
+                <p>${sec.p4}</p>
+              </div>
+              <div class="grid-box" style="grid-column: 1 / -1; background: rgba(255, 255, 255, 0.02); border-color: rgba(212, 175, 55, 0.2);">
+                <h3 style="color: var(--gold-primary);">${t.hBuddhaRel}</h3>
+                <p>${sec.buddhaRel}</p>
+              </div>
+            </div>
+            <div class="quote-box">${sec.quote}</div>
+          </article>
+        `;
+      });
+
+      // Vertiefung
+      html += `
+        <section class="insights-section" id="insights">
+          <div class="insights-header">
+            <span class="insights-tag">${t.insTag}</span>
+            <h3 class="insights-title">${t.insTitle}</h3>
+          </div>
+          <div class="insights-grid">
+            ${t.insCards.map(c => `
+              <div class="insight-card">
+                <h4>${c.t}</h4>
+                <p>${c.p}</p>
+                <div class="insight-quote">${c.q}</div>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      `;
+
+      // Synthese-Tabelle & Matrix
+      html += `
+        <section class="synthesis-section" id="synthese">
+          <h2 class="synthesis-title">${t.synTitle}</h2>
+          <p class="synthesis-intro">${t.synIntro}</p>
+
+          <div class="comparison-table-wrap">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>${t.thTrad}</th>
+                  <th>${t.thBuddha}</th>
+                  <th>${t.thTexts}</th>
+                  <th>${t.thEgo}</th>
+                  <th>${t.thGoal}</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${t.rows.map(r => `
+                  <tr>
+                    <td><strong>${r.r}</strong></td>
+                    <td>${r.b}</td>
+                    <td><em>${r.t}</em></td>
+                    <td>${r.e}</td>
+                    <td><strong>${r.g}</strong></td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="overlaps-grid">
+            <div class="overlap-card">
+              <h4>${t.c1T}</h4>
+              <p>${t.c1P}</p>
+            </div>
+            <div class="overlap-card">
+              <h4>${t.c2T}</h4>
+              <p>${t.c2P}</p>
+            </div>
+            <div class="overlap-card">
+              <h4>${t.c3T}</h4>
+              <p>${t.c3P}</p>
+            </div>
+          </div>
+        </section>
+      `;
+
+      area.innerHTML = html;
+    }
+
+    setLanguage(currentLang);
+  </script>
+</body>
+</html>

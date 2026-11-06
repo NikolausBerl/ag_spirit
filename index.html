@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meditation & Gewahrsein — Mediathek</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0c0f14;
+      --bg-surface: #141922;
+      --bg-surface-elevated: #1b222e;
+      --bg-card: #161d28;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(212, 175, 55, 0.35);
+      --text-main: #f0f3f8;
+      --text-muted: #94a3b8;
+      --text-subtle: #64748b;
+      --gold-primary: #d4af37;
+      --gold-hover: #f3cf65;
+      --gold-soft: rgba(212, 175, 55, 0.12);
+      --danger: #ef4444;
+      --danger-hover: #dc2626;
+      --danger-soft: rgba(239, 68, 68, 0.15);
+      --success: #10b981;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .top-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(12, 15, 20, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.15rem; }
+    .brand-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--gold-primary), #9a781b);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      color: #0c0f14; font-weight: 800; font-size: 1rem;
+    }
+    .nav-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    /* Sprachumschalter */
+    .lang-switcher {
+      display: inline-flex; align-items: center;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px; padding: 2px;
+    }
+    .lang-btn {
+      background: transparent; border: none; color: var(--text-muted);
+      padding: 5px 11px; border-radius: 16px; font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; transition: var(--transition); font-family: inherit;
+    }
+    .lang-btn.active {
+      background: var(--gold-primary); color: #0c0f14;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 18px; border-radius: 30px; font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; transition: var(--transition); border: 1px solid transparent; font-family: inherit;
+    }
+    .btn-outline { background: transparent; border-color: var(--border-subtle); color: var(--text-muted); }
+    .btn-outline:hover { border-color: var(--gold-primary); color: var(--gold-hover); background: var(--gold-soft); }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-primary), #b89124);
+      color: #0c0f14; box-shadow: 0 4px 14px rgba(212, 175, 55, 0.25);
+    }
+    .btn-gold:hover { transform: translateY(-1px); }
+    .btn-danger { background: var(--danger-soft); color: var(--danger); border-color: rgba(239, 68, 68, 0.3); }
+    .btn-danger:hover { background: var(--danger); color: #fff; }
+
+    .admin-bar {
+      display: none; background: var(--bg-surface-elevated);
+      border-bottom: 1px solid var(--border-accent);
+      padding: 10px 24px; justify-content: space-between; align-items: center; font-size: 0.85rem;
+    }
+    .admin-bar.active { display: flex; }
+    .admin-status { display: flex; align-items: center; gap: 8px; color: var(--gold-primary); font-weight: 600; }
+    .admin-actions { display: flex; align-items: center; gap: 8px; }
+
+    .hero-banner {
+      width: 100%; position: relative;
+      background: radial-gradient(circle at 50% 30%, #1e2638 0%, #0c0f14 80%);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 65px 24px 55px; text-align: center; overflow: hidden;
+    }
+    .hero-subtitle {
+      text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.25em;
+      color: var(--gold-primary); font-weight: 600; margin-bottom: 12px;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.15;
+      margin-bottom: 16px; color: #fff;
+    }
+    .hero-desc { max-width: 680px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem; }
+
+    .container { max-width: 1120px; margin: 40px auto 0; padding: 0 20px; }
+    .teacher-section { margin-bottom: 60px; scroll-margin-top: 80px; }
+    .section-header {
+      background: var(--bg-surface); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: 28px 32px; margin-bottom: 24px;
+      position: relative; overflow: hidden;
+    }
+    .section-header::after {
+      content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+      background: linear-gradient(to bottom, var(--gold-primary), transparent);
+    }
+    .section-title-wrap {
+      display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;
+    }
+    .section-title { font-family: 'Playfair Display', serif; font-size: 1.85rem; color: #fff; }
+    .section-badge {
+      font-size: 0.78rem; font-weight: 600; background: var(--gold-soft);
+      color: var(--gold-hover); border: 1px solid rgba(212, 175, 55, 0.25);
+      padding: 3px 10px; border-radius: 20px;
+    }
+    .section-bio { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
+
+    .video-list { display: flex; flex-direction: column; gap: 16px; }
+    .video-card {
+      background: var(--bg-card); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md); padding: 14px;
+      display: grid; grid-template-columns: 240px 1fr; gap: 20px; align-items: center;
+      transition: var(--transition); position: relative;
+    }
+    .video-card:hover {
+      border-color: rgba(212, 175, 55, 0.3); transform: translateY(-2px); box-shadow: var(--shadow-card);
+    }
+    .thumb-link {
+      position: relative; display: block; width: 100%; aspect-ratio: 16 / 9;
+      border-radius: var(--radius-sm); overflow: hidden; background: #000;
+    }
+    .thumb-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block; }
+    .thumb-link:hover .thumb-img { transform: scale(1.06); }
+    .play-badge {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 44px; height: 44px; background: rgba(12, 15, 20, 0.75);
+      backdrop-filter: blur(4px); border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      color: #fff; transition: var(--transition);
+    }
+    .thumb-link:hover .play-badge { background: #ff0000; border-color: #ff0000; transform: translate(-50%, -50%) scale(1.12); }
+    .play-badge svg { width: 18px; height: 18px; fill: currentColor; margin-left: 2px; }
+    .yt-target-indicator {
+      position: absolute; bottom: 6px; right: 6px; background: rgba(0, 0, 0, 0.75);
+      color: #cbd5e1; font-size: 0.68rem; padding: 2px 6px; border-radius: 4px;
+      font-weight: 500; display: flex; align-items: center; gap: 3px;
+    }
+    .video-info { display: flex; flex-direction: column; justify-content: center; padding-right: 12px; }
+    .video-meta-row { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+    .duration-pill {
+      display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem;
+      font-weight: 700; padding: 3px 9px; border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06); color: #e2e8f0; border: 1px solid var(--border-subtle);
+    }
+    .duration-pill.long { background: rgba(212, 175, 55, 0.15); color: var(--gold-hover); border-color: rgba(212, 175, 55, 0.3); }
+    .duration-pill.short { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3); }
+    .video-title { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 6px; line-height: 1.35; }
+    .video-title a:hover { color: var(--gold-primary); }
+    .video-desc { color: var(--text-muted); font-size: 0.92rem; line-height: 1.55; margin-bottom: 10px; }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .direct-link { font-size: 0.8rem; color: var(--gold-primary); display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
+    .direct-link:hover { text-decoration: underline; color: var(--gold-hover); }
+
+    .admin-card-actions { display: none; gap: 6px; }
+    body.is-admin .admin-card-actions { display: flex; }
+    .action-btn {
+      background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle);
+      color: var(--text-muted); border-radius: 6px; padding: 5px 9px; font-size: 0.78rem;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 4px; transition: var(--transition);
+    }
+    .action-btn:hover { color: #fff; border-color: var(--gold-primary); }
+    .action-btn.delete:hover { background: var(--danger-soft); border-color: var(--danger); color: var(--danger); }
+
+    .add-video-slot {
+      display: none; border: 2px dashed var(--border-subtle); border-radius: var(--radius-md);
+      padding: 20px; text-align: center; color: var(--text-muted); cursor: pointer;
+      transition: var(--transition); margin-top: 10px; font-weight: 600;
+    }
+    body.is-admin .add-video-slot { display: block; }
+    .add-video-slot:hover { border-color: var(--gold-primary); color: var(--gold-hover); background: var(--gold-soft); }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center;
+      justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal-card {
+      background: var(--bg-surface); border: 1px solid var(--border-accent);
+      border-radius: var(--radius-lg); padding: 30px; width: 100%; max-width: 500px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8); transform: translateY(20px); transition: transform 0.25s ease;
+    }
+    .modal-overlay.active .modal-card { transform: translateY(0); }
+    .modal-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 8px; color: #fff; }
+    .modal-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-muted);
+      margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .form-control {
+      width: 100%; background: var(--bg-base); border: 1px solid var(--border-subtle);
+      border-radius: 8px; padding: 10px 14px; color: #fff; font-family: inherit; font-size: 0.92rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .form-control:focus { border-color: var(--gold-primary); }
+    textarea.form-control { resize: vertical; min-height: 80px; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; }
+
+    .toast {
+      position: fixed; bottom: 24px; right: 24px; background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-accent); color: #fff; padding: 12px 20px;
+      border-radius: 30px; font-size: 0.88rem; font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6); transform: translateY(80px); opacity: 0;
+      transition: all 0.3s ease; z-index: 2000;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 768px) {
+      .video-card { grid-template-columns: 1fr; gap: 14px; }
+      .thumb-link { aspect-ratio: 16 / 9; max-width: 100%; }
+      .section-header { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="top-bar">
+    <div class="brand">
+      <div class="brand-icon">ॐ</div>
+      <div id="brandTitle">Meditation & Non-Dualität</div>
+    </div>
+    <div class="nav-actions">
+      <!-- Sprachumschalter DE | FR -->
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="btnDE" onclick="setLanguage('de')">DE</button>
+        <button class="lang-btn" id="btnFR" onclick="setLanguage('fr')">FR</button>
+      </div>
+
+      <!-- Link zu Traditionen -->
+      <a href="richtungen.html" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polygon points="12 8 8 12 12 16 16 12 12 8"></polygon>
+        </svg>
+        <span id="navTraditionsLabel">Traditionen</span>
+      </a>
+
+      <!-- Admin-Button -->
+      <button class="btn btn-outline" id="adminToggleBtn" onclick="openLoginModal()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        <span id="adminBtnLabel">Bearbeiten</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Admin Bar -->
+  <div class="admin-bar" id="adminBar">
+    <div class="admin-status">
+      <span>●</span> <span id="adminStatusText">Bearbeitungsmodus aktiv (Host-Synchronisiert)</span>
+    </div>
+    <div class="admin-actions">
+      <button class="btn btn-outline" style="padding: 5px 12px; font-size: 0.8rem;" onclick="exportData()" id="adminBackupBtn">Backup herunterladen</button>
+      <button class="btn btn-outline" style="padding: 5px 12px; font-size: 0.8rem;" onclick="resetToDefaults()" id="adminResetBtn">Auf Original zurücksetzen</button>
+      <button class="btn btn-danger" style="padding: 5px 12px; font-size: 0.8rem;" onclick="logoutAdmin()" id="adminLogoutBtn">Abmelden</button>
+    </div>
+  </div>
+
+  <!-- Hero Banner -->
+  <section class="hero-banner">
+    <div class="hero-subtitle" id="heroSubtitle">Sammlung Reines Gewahrsein</div>
+    <h1 class="hero-title" id="heroTitle">Stille, Selbsterforschung & Meditation</h1>
+    <p class="hero-desc" id="heroDesc">Kuratierte geführte Meditationen, Zeugen-Erforschung und Satsangs. Ein Klick auf das Bild öffnet das Originalvideo direkt auf YouTube.</p>
+  </section>
+
+  <!-- Hauptinhalt -->
+  <main class="container" id="sectionsContainer">
+    <p style="text-align: center; color: var(--text-muted); padding: 40px;" id="loadingNotice">Mediathek wird geladen...</p>
+  </main>
+
+  <!-- Login Modal -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal-card">
+      <h3 class="modal-title" id="loginModalTitle">Admin-Login</h3>
+      <p class="modal-desc" id="loginModalDesc">Geben Sie das Passwort ein, um Videos auf dem Server zu löschen, zu bearbeiten oder hinzuzufügen.</p>
+      <div class="form-group">
+        <label id="pwdLabel">Passwort (Standard: Paris)</label>
+        <input type="password" id="passwordInput" class="form-control" placeholder="Passwort eingeben" onkeydown="if(event.key==='Enter') submitLogin()">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeModal('loginModal')" id="loginCancelBtn">Abbrechen</button>
+        <button class="btn btn-gold" onclick="submitLogin()" id="loginSubmitBtn">Anmelden</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lösch-Modal -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal-card">
+      <h3 class="modal-title" style="color: var(--danger);" id="delModalTitle">Video löschen?</h3>
+      <p class="modal-desc" id="deletePromptText">Möchten Sie dieses Video wirklich vom Server entfernen?</p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeModal('deleteModal')" id="delCancelBtn">Abbrechen</button>
+        <button class="btn btn-danger" id="confirmDeleteBtn">Unwiderruflich löschen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit/Add Modal -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal-card">
+      <h3 class="modal-title" id="editModalTitle">Video bearbeiten</h3>
+      <p class="modal-desc" id="editModalDesc">Passen Sie Titel, YouTube-Link oder Inhaltsangabe an.</p>
+      
+      <input type="hidden" id="editSectionId">
+      <input type="hidden" id="editVideoIndex">
+
+      <div class="form-group">
+        <label id="lblYtUrl">YouTube Link oder Video-ID</label>
+        <input type="text" id="editVideoUrl" class="form-control" placeholder="z. B. https://youtube.com/watch?v=... oder ID">
+      </div>
+      <div class="form-group">
+        <label id="lblVidTitle">Titel des Videos</label>
+        <input type="text" id="editVideoTitle" class="form-control" placeholder="Titel der Meditation">
+      </div>
+      <div class="form-group">
+        <label id="lblVidDuration">Länge (z. B. 45 Min. oder 1 Min.)</label>
+        <input type="text" id="editVideoDuration" class="form-control" placeholder="45 Min.">
+      </div>
+      <div class="form-group">
+        <label id="lblVidDesc">Beschreibung (ca. 2 Sätze)</label>
+        <textarea id="editVideoDesc" class="form-control" placeholder="Zwei prägnante Sätze zum Inhalt..."></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeModal('editModal')" id="editCancelBtn">Abbrechen</button>
+        <button class="btn btn-gold" onclick="saveVideoModal()" id="editSaveBtn">Auf Host speichern</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toastBox">Änderung gespeichert!</div>
+
+  <script>
+    const API_ENDPOINT = "api.php";
+    let adminToken = "";
+    let isAdmin = false;
+    let appData = [];
+    let currentLang = localStorage.getItem("app_lang") || "de";
+
+    // Übersetzungswörterbuch für die Benutzeroberfläche
+    const i18n = {
+      de: {
+        brand: "Meditation & Non-Dualität",
+        traditions: "Traditionen",
+        edit: "Bearbeiten",
+        editEnd: "Bearbeiten beenden",
+        adminActive: "Bearbeitungsmodus aktiv (Host-Synchronisiert)",
+        backup: "Backup herunterladen",
+        reset: "Auf Original zurücksetzen",
+        logout: "Abmelden",
+        heroSub: "Sammlung Reines Gewahrsein",
+        heroTitle: "Stille, Selbsterforschung & Meditation",
+        heroDesc: "Kuratierte geführte Meditationen, Zeugen-Erforschung und Satsangs. Ein Klick auf das Bild öffnet das Originalvideo direkt auf YouTube.",
+        loading: "Mediathek wird geladen...",
+        viewYt: "Auf YouTube ansehen",
+        actionEdit: "✎ Bearbeiten",
+        actionDel: "🗑 Löschen",
+        addVideoPrefix: "+ Neues Video zu „",
+        addVideoSuffix: "“ hinzufügen",
+        loginTitle: "Admin-Login",
+        loginDesc: "Geben Sie das Passwort ein, um Videos auf dem Server zu verwalten.",
+        pwdPlaceholder: "Passwort eingeben",
+        pwdLabelText: "Passwort (Standard: Paris)",
+        cancel: "Abbrechen",
+        loginSubmit: "Anmelden",
+        delTitle: "Video löschen?",
+        delConfirm: "Unwiderruflich löschen",
+        editTitleEdit: "Video bearbeiten",
+        editTitleAdd: "Neues Video hinzufügen",
+        editDesc: "Passen Sie Titel, YouTube-Link oder Inhaltsangabe an.",
+        lblYt: "YouTube Link oder Video-ID",
+        lblTitle: "Titel des Videos",
+        lblDuration: "Länge (z. B. 45 Min. oder 1 Min.)",
+        lblDesc: "Beschreibung (ca. 2 Sätze)",
+        saveBtn: "Auf Host speichern",
+        toastSaved: "Erfolgreich auf dem Host gespeichert!",
+        toastDeleted: "Video auf Host gelöscht.",
+        toastReset: "Server auf Ursprungszustand zurückgesetzt!",
+        toastLogin: "Erfolgreich angemeldet!",
+        toastLogout: "Bearbeitungsmodus beendet.",
+        delPrompt: "Möchten Sie dieses Video wirklich löschen?"
+      },
+      fr: {
+        brand: "Méditation & Non-Dualité",
+        traditions: "Traditions",
+        edit: "Modifier",
+        editEnd: "Quitter le mode édition",
+        adminActive: "Mode édition actif (synchronisé)",
+        backup: "Télécharger la sauvegarde",
+        reset: "Restaurer l'original",
+        logout: "Déconnexion",
+        heroSub: "Collection Conscience Pure",
+        heroTitle: "Silence, Investigation du Soi & Méditation",
+        heroDesc: "Méditations guidées, exploration du témoin intérieur et satsangs. Cliquez sur l'image pour ouvrir la vidéo originale sur YouTube.",
+        loading: "Chargement de la médiathèque...",
+        viewYt: "Regarder sur YouTube",
+        actionEdit: "✎ Modifier",
+        actionDel: "🗑 Supprimer",
+        addVideoPrefix: "+ Ajouter une vidéo à « ",
+        addVideoSuffix: " »",
+        loginTitle: "Connexion Admin",
+        loginDesc: "Entrez le mot de passe pour gérer les vidéos sur le serveur.",
+        pwdPlaceholder: "Entrez le mot de passe",
+        pwdLabelText: "Mot de passe (par défaut : Paris)",
+        cancel: "Annuler",
+        loginSubmit: "Connexion",
+        delTitle: "Supprimer la vidéo ?",
+        delConfirm: "Supprimer définitivement",
+        editTitleEdit: "Modifier la vidéo",
+        editTitleAdd: "Ajouter une nouvelle vidéo",
+        editDesc: "Ajustez le titre, le lien YouTube ou la description.",
+        lblYt: "Lien YouTube ou ID de la vidéo",
+        lblTitle: "Titre de la vidéo",
+        lblDuration: "Durée (ex. : 45 min ou 1 min)",
+        lblDesc: "Description (env. 2 phrases)",
+        saveBtn: "Enregistrer sur l'hôte",
+        toastSaved: "Enregistré avec succès sur le serveur !",
+        toastDeleted: "Vidéo supprimée du serveur.",
+        toastReset: "Serveur restauré à l'état initial !",
+        toastLogin: "Connexion réussie !",
+        toastLogout: "Mode édition désactivé.",
+        delPrompt: "Voulez-vous vraiment supprimer cette vidéo ?"
+      }
+    };
+
+    // Übersetzungen für die statischen Autoren-Sektionen
+    const sectionTexts = {
+      de: {
+        mooji: {
+          title: "Sri Mooji — Geführte Meditationen & Selbsterforschung",
+          badge: "Advaita Vedanta / Satsang",
+          bio: "Mooji (Anthony Paul Moo-Young) ist ein weltweit verehrter Meister der Non-Dualität in der direkten Nachfolge von Sri Ramana Maharshi und Papaji. Seine Unterweisungen zielen kompromisslos darauf ab, den Geist durch direkte Selbsterforschung (Self-Inquiry) in seine wahre Quelle zurückzuführen. Die nachfolgenden Einheiten sind nach Laufzeit geordnet."
+        },
+        nisargadatta: {
+          title: "Sri Nisargadatta Maharaj — Das reine „Ich Bin“",
+          badge: "Klassisches Advaita",
+          bio: "Sri Nisargadatta Maharaj lehrte in Mumbai ohne Dogma. Seine Botschaft fordert dazu auf, vor alle Gedanken und Konzepte zurückzutreten und sich ausschließlich im reinen Gefühl 'Ich bin' zu verankern, um die Illusion der Trennung aufzulösen."
+        },
+        ramana: {
+          title: "Bhagavan Sri Ramana Maharshi — Stille & Vichara",
+          badge: "Atma-Vichara / Arunachala",
+          bio: "Sri Ramana Maharshi verbrachte sein Leben am heiligen Berg Arunachala. Seine Selbsterforschung über die existenzielle Frage 'Wer bin ich?' bringt den Geist in seine Quelle zurück. Seine reinste Übertragung war die lebendige Stille."
+        },
+        eckhart: {
+          title: "Eckhart Tolle — Die Kraft der Gegenwart",
+          badge: "Achtsamkeit & Gegenwärtigkeit",
+          bio: "Eckhart Tolle übersetzt östliche Weisheiten in eine klare, westliche Sprache. Er zeigt, wie der ständige Zwang zu denken Leiden erzeugt und wie das Verweilen im Jetzt den Schmerzkörper transformiert."
+        },
+        buddhism: {
+          title: "Buddhistische Praxis & Dharma-Lehre",
+          badge: "Zen / Vipassana / Achtsamkeit",
+          bio: "Vereint die Weisheit des Zen-Buddhismus und der Einsichtsmeditation (Vipassana). Nicht-wertendes Beobachten schenkt emotionale Klarheit und Stabilität im Alltag."
+        },
+        somatic: {
+          title: "Spezifische Themen: Angstlösung & Nervensystem",
+          badge: "Somatik / Schlaf / Frequenzen",
+          bio: "Sanfte somatische Entladungen und vagale Atemübungen leiten das Nervensystem in die Entspannung und schaffen ein sicheres inneres Fundament."
+        },
+        shorts: {
+          title: "⚡ Kurzvideos & Impulse (< 5 Minuten)",
+          badge: "Micro-Practices / Shorts",
+          bio: "Kurzformate und Shorts für eine unmittelbare Zentrierung mitten im geschäftigen Alltag."
+        }
+      },
+      fr: {
+        mooji: {
+          title: "Sri Mooji — Méditations Guidées & Investigation du Soi",
+          badge: "Advaita Vedanta / Satsang",
+          bio: "Mooji (Anthony Paul Moo-Young) est un maître de la non-dualité vénéré dans le monde entier, dans la lignée de Sri Ramana Maharshi et Papaji. Ses enseignements visent à ramener l'esprit à sa véritable source par l'investigation directe du Soi. Les séances suivantes sont classées par durée."
+        },
+        nisargadatta: {
+          title: "Sri Nisargadatta Maharaj — Le pur « Je Suis »",
+          badge: "Advaita Classique",
+          bio: "Sri Nisargadatta Maharaj a enseigné à Mumbai sans aucun dogme. Son message invite à revenir en amont de toute pensée et à s'ancrer dans le pur sentiment « Je suis » pour dissoudre l'illusion de la séparation."
+        },
+        ramana: {
+          title: "Bhagavan Sri Ramana Maharshi — Silence & Vichara",
+          badge: "Atma-Vichara / Arunachala",
+          bio: "Sri Ramana Maharshi a vécu au mont sacré Arunachala. Son investigation sur la question existentielle « Qui suis-je ? » ramène le mental à sa source dans le Cœur spirituel. Sa transmission la plus puissante demeure le silence vivant."
+        },
+        eckhart: {
+          title: "Eckhart Tolle — Le Pouvoir du Moment Présent",
+          badge: "Pleine Conscience & Présence",
+          bio: "Eckhart Tolle transmet la sagesse intemporelle dans un langage clair et moderne. Il démontre que la compulsion de penser crée la souffrance et comment la présence consciente libère du corps de souffrance."
+        },
+        buddhism: {
+          title: "Pratique Bouddhiste & Enseignements du Dharma",
+          badge: "Zen / Vipassana / Pleine Conscience",
+          bio: "Réunit la tradition Zen et la méditation de vision pénétrante (Vipassana). L'observation sans jugement procure équanimité, guérison émotionnelle et sérénité."
+        },
+        somatic: {
+          title: "Thèmes Spécifiques : Apaisement du Système Nerveux",
+          badge: "Somatique / Sommeil / Fréquences",
+          bio: "Exercices vagaux et réinitialisation somatique pour calmer le système nerveux et créer la base de sécurité indispensable au calme intérieur."
+        },
+        shorts: {
+          title: "⚡ Vidéos Courtes & Éveils Flash (< 5 min)",
+          badge: "Micro-Pratiques / Shorts",
+          bio: "Formats courts pour interrompre les pensées automatiques et revenir instantanément à la présence au cours de la journée."
+        }
+      }
+    };
+
+    // Sprache einstellen
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem("app_lang", lang);
+      document.documentElement.lang = lang;
+
+      // Switcher-Buttons stylen
+      document.getElementById("btnDE").classList.toggle("active", lang === "de");
+      document.getElementById("btnFR").classList.toggle("active", lang === "fr");
+
+      // UI-Texte aktualisieren
+      const t = i18n[lang];
+      document.getElementById("brandTitle").innerText = t.brand;
+      document.getElementById("navTraditionsLabel").innerText = t.traditions;
+      document.getElementById("adminBtnLabel").innerText = isAdmin ? t.editEnd : t.edit;
+      document.getElementById("adminStatusText").innerText = t.adminActive;
+      document.getElementById("adminBackupBtn").innerText = t.backup;
+      document.getElementById("adminResetBtn").innerText = t.reset;
+      document.getElementById("adminLogoutBtn").innerText = t.logout;
+      document.getElementById("heroSubtitle").innerText = t.heroSub;
+      document.getElementById("heroTitle").innerText = t.heroTitle;
+      document.getElementById("heroDesc").innerText = t.heroDesc;
+
+      // Modal Texte
+      document.getElementById("loginModalTitle").innerText = t.loginTitle;
+      document.getElementById("loginModalDesc").innerText = t.loginDesc;
+      document.getElementById("pwdLabel").innerText = t.pwdLabelText;
+      document.getElementById("passwordInput").placeholder = t.pwdPlaceholder;
+      document.getElementById("loginCancelBtn").innerText = t.cancel;
+      document.getElementById("loginSubmitBtn").innerText = t.loginSubmit;
+      document.getElementById("delModalTitle").innerText = t.delTitle;
+      document.getElementById("delCancelBtn").innerText = t.cancel;
+      document.getElementById("confirmDeleteBtn").innerText = t.delConfirm;
+      document.getElementById("lblYtUrl").innerText = t.lblYt;
+      document.getElementById("lblVidTitle").innerText = t.lblTitle;
+      document.getElementById("lblVidDuration").innerText = t.lblDuration;
+      document.getElementById("lblVidDesc").innerText = t.lblDesc;
+      document.getElementById("editCancelBtn").innerText = t.cancel;
+      document.getElementById("editSaveBtn").innerText = t.saveBtn;
+
+      render();
+    }
+
+    // Standard-Datensatz
+    const defaultData = [
+      {
+        id: "mooji",
+        videos: [
+          { id: "2ujnFtx6TU8", title: "Forgiveness & Deep Presence — Satsang Meditation", duration: "51 Min.", minutes: 51, desc: "Mooji führt in die heilsame Kraft des vollkommenen Vergebens und Loslassens." },
+          { id: "sfFinak31xQ", title: "The Most Powerful Meditation Exercise", duration: "48 Min.", minutes: 48, desc: "Eine knapp fünfzigminütige Führung zur Enttarnung des gedanklichen Beobachters." },
+          { id: "Esbrnzoirk4", title: "A Profound Guided Meditation ~ The Boundless Ocean of Being", duration: "45 Min.", minutes: 45, desc: "Mooji öffnet den Raum in den grenzenlosen Ozean des reinen Bewusstseins." },
+          { id: "7aktpOWlDhY", title: "Surrender to Deep Sleep with This Heartwarming Guided Meditation", duration: "40 Min.", minutes: 40, desc: "Herzerwärmende Einschlafmeditation für tiefes Loslassen." },
+          { id: "LE3adFvr6es", title: "Beyond All Ideas — Extremely Powerful Guided Meditation", duration: "35 Min.", minutes: 35, desc: "Sämtliche Vorstellungen und Urteile beiseitelegen und in der Weite ruhen." },
+          { id: "rlqVgxINFZs", title: "Enter the Silence Within — Deep Guided Meditation", duration: "36 Min.", minutes: 36, desc: "Schritt für Schritt in die unerschütterliche innere Stille eintauchen." },
+          { id: "hksrDkxMOuY", title: "Discover Profound Stillness (With Music)", duration: "30 Min.", minutes: 30, desc: "Ruhen im bereits vorhandenen Geistesfrieden, der keinerlei Anstrengung bedarf." },
+          { id: "VD7Brg0geVA", title: "A Peaceful Life Is Priceless — Beautiful Guided Meditation", duration: "28 Min.", minutes: 28, desc: "Unerschütterlich im eigenen Wesenskern ruhen ohne Gedankenkontrolle." },
+          { id: "Y9wLhV8g3Eg", title: "The Space of Being — Guided Meditation", duration: "25 Min.", minutes: 25, desc: "Hinweis auf den raumhaften Hintergrund aller Wahrnehmungen." },
+          { id: "ptVeOhCqQdU", title: "Just Be! — Rest in the Silence of Being", duration: "18 Min.", minutes: 18, desc: "Einfach nur sein, ohne Erwartungen und Projektionen." },
+          { id: "8vMEoPgg-PE", title: "You Are Life Itself — Guided Meditation", duration: "16 Min.", minutes: 16, desc: "Das Gewahrsein, dass wir niemals vom Leben getrennt waren." },
+          { id: "zwMroJgTNi4", title: "An Invitation to Freedom: Immediate Awakening for Everyone", duration: "15 Min.", minutes: 15, desc: "Moojis komprimierte Essenz der Selbsterforschung." }
+        ]
+      },
+      {
+        id: "nisargadatta",
+        videos: [
+          { id: "-k1dM2QKYts", title: "„I Am“ — A Guided Meditation", duration: "16 Min.", minutes: 16, desc: "Reise zur Quelle des Daseinsgefühls vor jeder sprachlichen Benennung." },
+          { id: "-AAJhRS17Sc", title: "Living Without the Personal ‘Me’", duration: "19 Min.", minutes: 19, desc: "Wie das Leben spontan und angstfrei ohne das Diktat eines fiktiven Ichs fließt." },
+          { id: "4fNBf0YyN64", title: "Moving Beyond the Witness", duration: "22 Min.", minutes: 22, desc: "Überschreitet selbst den Beobachter und verweist auf das Absolute." }
+        ]
+      },
+      {
+        id: "ramana",
+        videos: [
+          { id: "vZ_Z8QA9HYg", title: "Why Silence Is the Fastest Way to Ego Death", duration: "17 Min.", minutes: 17, desc: "Warum bewusste Stille das gedankliche Ego am schnellsten auflöst." },
+          { id: "eRMk5UgQ__M", title: "How to Be a Witness at the Right Time?", duration: "15 Min.", minutes: 15, desc: "Praktische Hinweise für den Alltag beim Auftreten heftiger Gefühle." }
+        ]
+      },
+      {
+        id: "eckhart",
+        videos: [
+          { id: "We8PLL5WSH0", title: "Nothing in This World Can Touch the Real You", duration: "14 Min.", minutes: 14, desc: "Erinnerung daran, dass Lebenskrisen niemals das reine Bewusstsein berühren." },
+          { id: "iUKDuVRY_D8", title: "Why Did Eckhart Awaken?", duration: "18 Min.", minutes: 18, desc: "Eckhart berichtet über die Nacht seines dramatischen Erwachens." }
+        ]
+      },
+      {
+        id: "buddhism",
+        videos: [
+          { id: "4uRTZMFpNXM", title: "One Practice That Changes Everything In Meditation (Tatsudo Nicole Baden)", duration: "26 Min.", minutes: 26, desc: "Den Kampf gegen Gedanken beenden und in Klarheit verweilen." },
+          { id: "WQt1nG86cp4", title: "You Are Not Your Thoughts (Tatsudo Nicole Baden)", duration: "21 Min.", minutes: 21, desc: "Differenzierung zwischen Gedanke und dem Raum, der ihn wahrnimmt." },
+          { id: "WIoHD4PbUeA", title: "The Most Basic Truths: Gateways to Freedom (Jack Kornfield)", duration: "45 Min.", minutes: 45, desc: "Dharma-Talk über Vergänglichkeit, Herzensöffnung und Freiheit." }
+        ]
+      },
+      {
+        id: "somatic",
+        videos: [
+          { id: "1vx8iUvfyCY", title: "Guided Meditation for Detachment From Over-Thinking", duration: "20 Min.", minutes: 20, desc: "Schnelle Entlastung bei kreisenden Sorgen und mentalem Stress." },
+          { id: "o2N-bVy78OA", title: "How to Permanently Remove Fear From The Body", duration: "18 Min.", minutes: 18, desc: "Somatische Praxis, um Angstgefühle auf Körperebene zu entladen." }
+        ]
+      },
+      {
+        id: "shorts",
+        videos: [
+          { id: "x7C7lsyi6yQ", title: "Mooji: Step Into the Witness & Quiet the Mind", duration: "1 Min.", minutes: 1, desc: "In 60 Sekunden aus dem Gedankenstrom in das Zeugensein treten." },
+          { id: "7mHgADTjtLc", title: "Non-Duality Explained Simply in 1-Min", duration: "1 Min.", minutes: 1, desc: "Die Kernbotschaft der Non-Dualität kompakt zusammengefasst." }
+        ]
+      }
+    ];
+
+    async function loadDataFromHost() {
+      try {
+        const response = await fetch(API_ENDPOINT + "?t=" + Date.now());
+        if (response.ok) {
+          const data = await response.json();
+          if (Array.isArray(data) && data.length > 0) {
+            appData = data;
+          } else {
+            appData = defaultData;
+          }
+        } else {
+          appData = defaultData;
+        }
+      } catch (err) {
+        console.error("Ladefehler:", err);
+        appData = defaultData;
+      }
+      setLanguage(currentLang);
+    }
+
+    async function saveDataToHost() {
+      if (!adminToken) {
+        alert("Sitzung abgelaufen.");
+        return false;
+      }
+      try {
+        const response = await fetch(API_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Admin-Password": adminToken
+          },
+          body: JSON.stringify(appData)
+        });
+        const result = await response.json();
+        if (response.ok && result.success) {
+          render();
+          return true;
+        } else {
+          alert("Fehler: " + (result.error || "Unbekannt"));
+          return false;
+        }
+      } catch (err) {
+        alert("Netzwerkfehler");
+        return false;
+      }
+    }
+
+    function render() {
+      const container = document.getElementById("sectionsContainer");
+      container.innerHTML = "";
+      const t = i18n[currentLang];
+      const localizedSecs = sectionTexts[currentLang];
+
+      appData.forEach(section => {
+        const secMeta = localizedSecs[section.id] || { title: section.id, badge: "", bio: "" };
+
+        const secElem = document.createElement("section");
+        secElem.className = "teacher-section";
+        secElem.id = section.id;
+
+        secElem.innerHTML = `
+          <div class="section-header">
+            <div class="section-title-wrap">
+              <h2 class="section-title">${secMeta.title}</h2>
+              <span class="section-badge">${secMeta.badge}</span>
+            </div>
+            <p class="section-bio">${secMeta.bio}</p>
+          </div>
+          <div class="video-list" id="list-${section.id}"></div>
+          <div class="add-video-slot" onclick="openAddVideoModal('${section.id}')">
+            ${t.addVideoPrefix}${secMeta.title.split('—')[0].trim()}${t.addVideoSuffix}
+          </div>
+        `;
+
+        container.appendChild(secElem);
+
+        const listContainer = secElem.querySelector(`#list-${section.id}`);
+        (section.videos || []).forEach((video, vIdx) => {
+          const isLong = (video.minutes && video.minutes >= 30) || (video.duration && parseInt(video.duration) >= 30);
+          const isShort = (video.minutes && video.minutes <= 5) || (video.duration && parseInt(video.duration) <= 5);
+          const pillClass = isLong ? "duration-pill long" : (isShort ? "duration-pill short" : "duration-pill");
+          const ytUrl = `https://www.youtube.com/watch?v=${video.id}`;
+          const thumbUrl = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`;
+
+          const card = document.createElement("div");
+          card.className = "video-card";
+          card.innerHTML = `
+            <a href="${ytUrl}" target="_blank" rel="noopener noreferrer" class="thumb-link" title="YouTube">
+              <img src="${thumbUrl}" alt="${video.title}" class="thumb-img" loading="lazy">
+              <div class="play-badge"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+              <div class="yt-target-indicator"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M10 9v6l5-3-5-3z"/></svg> YouTube</div>
+            </a>
+            <div class="video-info">
+              <div class="video-meta-row"><span class="${pillClass}">⏱ ${video.duration}</span></div>
+              <h3 class="video-title"><a href="${ytUrl}" target="_blank" rel="noopener noreferrer">${video.title}</a></h3>
+              <p class="video-desc">${video.desc}</p>
+              <div class="card-footer">
+                <a href="${ytUrl}" target="_blank" rel="noopener noreferrer" class="direct-link">
+                  ${t.viewYt}
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+                <div class="admin-card-actions">
+                  <button class="action-btn" onclick="openEditVideoModal('${section.id}', ${vIdx})">${t.actionEdit}</button>
+                  <button class="action-btn delete" onclick="confirmDeleteVideo('${section.id}', ${vIdx})">${t.actionDel}</button>
+                </div>
+              </div>
+            </div>
+          `;
+          listContainer.appendChild(card);
+        });
+      });
+    }
+
+    function openModal(id) { document.getElementById(id).classList.add("active"); }
+    function closeModal(id) { document.getElementById(id).classList.remove("active"); }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toastBox");
+      toast.innerText = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 3000);
+    }
+
+    function openLoginModal() {
+      if (isAdmin) { logoutAdmin(); return; }
+      document.getElementById("passwordInput").value = "";
+      openModal("loginModal");
+      setTimeout(() => document.getElementById("passwordInput").focus(), 150);
+    }
+
+    function submitLogin() {
+      const input = document.getElementById("passwordInput").value.trim();
+      if (input === "Paris") {
+        adminToken = input;
+        isAdmin = true;
+        document.body.classList.add("is-admin");
+        document.getElementById("adminBar").classList.add("active");
+        document.getElementById("adminBtnLabel").innerText = i18n[currentLang].editEnd;
+        closeModal("loginModal");
+        showToast(i18n[currentLang].toastLogin);
+      } else {
+        alert(currentLang === 'fr' ? "Mot de passe incorrect !" : "Falsches Passwort!");
+      }
+    }
+
+    function logoutAdmin() {
+      isAdmin = false;
+      adminToken = "";
+      document.body.classList.remove("is-admin");
+      document.getElementById("adminBar").classList.remove("active");
+      document.getElementById("adminBtnLabel").innerText = i18n[currentLang].edit;
+      showToast(i18n[currentLang].toastLogout);
+    }
+
+    function confirmDeleteVideo(sectionId, videoIndex) {
+      const section = appData.find(s => s.id === sectionId);
+      if (!section || !section.videos[videoIndex]) return;
+      const video = section.videos[videoIndex];
+      document.getElementById("deletePromptText").innerText = `${i18n[currentLang].delPrompt}\n\n„${video.title}“`;
+      
+      const confirmBtn = document.getElementById("confirmDeleteBtn");
+      confirmBtn.onclick = async function() {
+        section.videos.splice(videoIndex, 1);
+        const ok = await saveDataToHost();
+        if (ok) {
+          closeModal("deleteModal");
+          showToast(i18n[currentLang].toastDeleted);
+        }
+      };
+      openModal("deleteModal");
+    }
+
+    function openEditVideoModal(sectionId, videoIndex) {
+      const t = i18n[currentLang];
+      const section = appData.find(s => s.id === sectionId);
+      const video = section.videos[videoIndex];
+
+      document.getElementById("editModalTitle").innerText = t.editTitleEdit;
+      document.getElementById("editSectionId").value = sectionId;
+      document.getElementById("editVideoIndex").value = videoIndex;
+      document.getElementById("editVideoUrl").value = video.id;
+      document.getElementById("editVideoTitle").value = video.title;
+      document.getElementById("editVideoDuration").value = video.duration;
+      document.getElementById("editVideoDesc").value = video.desc;
+      openModal("editModal");
+    }
+
+    function openAddVideoModal(sectionId) {
+      const t = i18n[currentLang];
+      document.getElementById("editModalTitle").innerText = t.editTitleAdd;
+      document.getElementById("editSectionId").value = sectionId;
+      document.getElementById("editVideoIndex").value = "-1";
+      document.getElementById("editVideoUrl").value = "";
+      document.getElementById("editVideoTitle").value = "";
+      document.getElementById("editVideoDuration").value = currentLang === "fr" ? "20 min" : "20 Min.";
+      document.getElementById("editVideoDesc").value = "";
+      openModal("editModal");
+    }
+
+    function extractVideoId(input) {
+      input = input.trim();
+      const match = input.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/))([\w-]{11})/);
+      return match ? match[1] : input;
+    }
+
+    async function saveVideoModal() {
+      const secId = document.getElementById("editSectionId").value;
+      const vIdx = parseInt(document.getElementById("editVideoIndex").value);
+      const rawUrl = document.getElementById("editVideoUrl").value;
+      const title = document.getElementById("editVideoTitle").value.trim();
+      const duration = document.getElementById("editVideoDuration").value.trim();
+      const desc = document.getElementById("editVideoDesc").value.trim();
+
+      const vidId = extractVideoId(rawUrl);
+      if (!vidId) {
+        alert(currentLang === 'fr' ? "Lien ou identifiant vidéo YouTube invalide." : "Bitte eine gültige YouTube-URL oder Video-ID angeben.");
+        return;
+      }
+      if (!title) {
+        alert(currentLang === 'fr' ? "Veuillez entrer un titre." : "Bitte einen Titel eingeben.");
+        return;
+      }
+
+      const minutes = parseInt(duration) || 15;
+      const section = appData.find(s => s.id === secId);
+      if (!section) return;
+
+      const videoObj = { id: vidId, title, duration, minutes, desc };
+
+      if (vIdx === -1) {
+        section.videos.push(videoObj);
+      } else {
+        section.videos[vIdx] = videoObj;
+      }
+
+      if (secId === "mooji") {
+        section.videos.sort((a, b) => (b.minutes || 0) - (a.minutes || 0));
+      }
+
+      const ok = await saveDataToHost();
+      if (ok) {
+        closeModal("editModal");
+        showToast(i18n[currentLang].toastSaved);
+      }
+    }
+
+    function exportData() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", "meditation_mediathek_backup.json");
+      dlAnchor.click();
+    }
+
+    async function resetToDefaults() {
+      const confirmMsg = currentLang === 'fr' 
+        ? "Voulez-vous vraiment restaurer l'état initial sur le serveur ?" 
+        : "Möchten Sie wirklich alle Daten auf dem Server auf den Ursprungszustand zurücksetzen?";
+      if (confirm(confirmMsg)) {
+        appData = defaultData;
+        const ok = await saveDataToHost();
+        if (ok) showToast(i18n[currentLang].toastReset);
+      }
+    }
+
+    loadDataFromHost();
+  </script>
+</body>
+</html>
