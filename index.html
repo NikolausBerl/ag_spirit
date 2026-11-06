@@ -1,9 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meditation & Gewahrsein — Mediathek</title>
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem("app_theme") || "light";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
@@ -30,6 +36,35 @@
       --radius-lg: 20px;
       --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
       --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --topbar-bg: rgba(12, 15, 20, 0.92);
+      --hero-bg: radial-gradient(circle at 50% 30%, #1e2638 0%, #0c0f14 80%);
+      --title-color: #ffffff;
+      --pill-bg: rgba(255, 255, 255, 0.06);
+      --pill-color: #e2e8f0;
+      --modal-overlay-bg: rgba(0, 0, 0, 0.78);
+    }
+
+    /* Heller Modus */
+    [data-theme="light"] {
+      --bg-base: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f1f5f9;
+      --bg-card: #ffffff;
+      --border-subtle: #e2e8f0;
+      --border-accent: rgba(180, 130, 20, 0.4);
+      --text-main: #1e293b;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --gold-primary: #b48214;
+      --gold-hover: #8c630c;
+      --gold-soft: rgba(180, 130, 20, 0.12);
+      --shadow-card: 0 4px 16px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+      --topbar-bg: rgba(255, 255, 255, 0.94);
+      --hero-bg: radial-gradient(circle at 50% 25%, #ffffff 0%, #f1f5f9 100%);
+      --title-color: #0f172a;
+      --pill-bg: #f1f5f9;
+      --pill-color: #334155;
+      --modal-overlay-bg: rgba(15, 23, 42, 0.55);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -45,7 +80,7 @@
 
     .top-bar {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(12, 15, 20, 0.92);
+      background: var(--topbar-bg);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-subtle);
       padding: 14px 24px;
@@ -102,7 +137,7 @@
 
     .hero-banner {
       width: 100%; position: relative;
-      background: radial-gradient(circle at 50% 30%, #1e2638 0%, #0c0f14 80%);
+      background: var(--hero-bg);
       border-bottom: 1px solid var(--border-subtle);
       padding: 65px 24px 55px; text-align: center; overflow: hidden;
     }
@@ -113,7 +148,7 @@
     .hero-title {
       font-family: 'Playfair Display', serif;
       font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 700; line-height: 1.15;
-      margin-bottom: 16px; color: #fff;
+      margin-bottom: 16px; color: var(--title-color);
     }
     .hero-desc { max-width: 680px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem; }
 
@@ -131,7 +166,7 @@
     .section-title-wrap {
       display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;
     }
-    .section-title { font-family: 'Playfair Display', serif; font-size: 1.85rem; color: #fff; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: 1.85rem; color: var(--title-color); }
     .section-badge {
       font-size: 0.78rem; font-weight: 600; background: var(--gold-soft);
       color: var(--gold-hover); border: 1px solid rgba(212, 175, 55, 0.25);
@@ -174,11 +209,15 @@
     .duration-pill {
       display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem;
       font-weight: 700; padding: 3px 9px; border-radius: 12px;
-      background: rgba(255, 255, 255, 0.06); color: #e2e8f0; border: 1px solid var(--border-subtle);
+      background: var(--pill-bg); color: var(--pill-color); border: 1px solid var(--border-subtle);
+    }
+    [data-theme="light"] .duration-pill.long { color: #8c630c; border-color: rgba(180, 130, 20, 0.4); }
+    [data-theme="light"] .duration-pill.short { color: #0284c7; border-color: rgba(2, 132, 199, 0.35);
     }
     .duration-pill.long { background: rgba(212, 175, 55, 0.15); color: var(--gold-hover); border-color: rgba(212, 175, 55, 0.3); }
     .duration-pill.short { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3); }
-    .video-title { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 6px; line-height: 1.35; }
+    .video-title { font-size: 1.1rem; font-weight: 600; color: var(--title-color); margin-bottom: 6px; line-height: 1.35; }
+    .video-title a { color: var(--title-color); transition: var(--transition); }
     .video-title a:hover { color: var(--gold-primary); }
     .video-desc { color: var(--text-muted); font-size: 0.92rem; line-height: 1.55; margin-bottom: 10px; }
     .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -205,7 +244,7 @@
 
     /* Modals */
     .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.78);
+      position: fixed; inset: 0; background: var(--modal-overlay-bg);
       backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center;
       justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
     }
@@ -216,7 +255,7 @@
       box-shadow: 0 20px 40px rgba(0,0,0,0.8); transform: translateY(20px); transition: transform 0.25s ease;
     }
     .modal-overlay.active .modal-card { transform: translateY(0); }
-    .modal-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 8px; color: #fff; }
+    .modal-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 8px; color: var(--title-color); }
     .modal-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
     .form-group { margin-bottom: 16px; }
     .form-group label {
@@ -225,7 +264,7 @@
     }
     .form-control {
       width: 100%; background: var(--bg-base); border: 1px solid var(--border-subtle);
-      border-radius: 8px; padding: 10px 14px; color: #fff; font-family: inherit; font-size: 0.92rem;
+      border-radius: 8px; padding: 10px 14px; color: var(--text-main); font-family: inherit; font-size: 0.92rem;
       outline: none; transition: border-color 0.2s;
     }
     .form-control:focus { border-color: var(--gold-primary); }
@@ -234,12 +273,133 @@
 
     .toast {
       position: fixed; bottom: 24px; right: 24px; background: var(--bg-surface-elevated);
-      border: 1px solid var(--border-accent); color: #fff; padding: 12px 20px;
+      border: 1px solid var(--border-accent); color: var(--text-main); padding: 12px 20px;
       border-radius: 30px; font-size: 0.88rem; font-weight: 600;
       box-shadow: 0 10px 25px rgba(0,0,0,0.6); transform: translateY(80px); opacity: 0;
       transition: all 0.3s ease; z-index: 2000;
     }
     .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* Checkmark Toggle Button */
+    .check-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 3px 10px 3px 8px; border-radius: 20px;
+      font-size: 0.75rem; font-weight: 600;
+      background: var(--pill-bg); color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+      cursor: pointer; transition: var(--transition);
+      user-select: none; font-family: inherit; line-height: 1.4;
+    }
+    .check-pill:hover {
+      border-color: var(--success); color: var(--text-main);
+      background: rgba(16, 185, 129, 0.08);
+    }
+    .check-box {
+      width: 15px; height: 15px; border-radius: 4px;
+      border: 1.5px solid var(--text-subtle);
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: var(--transition); flex-shrink: 0;
+    }
+    .check-box svg {
+      opacity: 0; transform: scale(0.6); transition: var(--transition);
+    }
+    .check-pill.is-checked {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.45);
+      color: #10b981;
+    }
+    [data-theme="light"] .check-pill.is-checked {
+      background: rgba(16, 185, 129, 0.14);
+      border-color: rgba(16, 185, 129, 0.6);
+      color: #047857;
+    }
+    .check-pill.is-checked .check-box {
+      background: #10b981; border-color: #10b981; color: #fff;
+    }
+    .check-pill.is-checked .check-box svg {
+      opacity: 1; transform: scale(1);
+    }
+
+    /* Subtle Card Highlighting when Completed */
+    .video-card.is-completed {
+      border-color: rgba(16, 185, 129, 0.35);
+      border-left: 4px solid var(--success);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, var(--bg-card) 60%);
+      box-shadow: 0 4px 18px rgba(16, 185, 129, 0.08);
+    }
+    [data-theme="light"] .video-card.is-completed {
+      border-color: rgba(16, 185, 129, 0.5);
+      border-left: 4px solid #10b981;
+      background: linear-gradient(135deg, rgba(240, 253, 244, 0.95) 0%, #ffffff 65%);
+      box-shadow: 0 4px 18px rgba(16, 185, 129, 0.12);
+    }
+    .video-card.is-completed:hover {
+      border-color: #10b981;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.16);
+    }
+
+    /* Thumbnail completed badge */
+    .thumb-check-badge {
+      position: absolute; top: 8px; left: 8px;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: #10b981; color: #ffffff;
+      display: none; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+      z-index: 2; transition: var(--transition);
+    }
+    .video-card.is-completed .thumb-check-badge {
+      display: flex;
+    }
+
+    /* Progress pill in hero */
+    .progress-wrap {
+      display: flex; justify-content: center; margin-top: 18px;
+    }
+    .progress-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; border-radius: 30px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--text-main);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .progress-check-icon {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--success); color: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Theme switcher button */
+    .theme-toggle-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px; border-radius: 20px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main); font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: var(--transition); font-family: inherit;
+    }
+    .theme-toggle-btn:hover {
+      border-color: var(--gold-primary); color: var(--gold-hover);
+      background: var(--gold-soft);
+    }
+    .theme-icon-wrap {
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+
+    [data-theme="light"] .btn-gold { color: #ffffff; }
+    [data-theme="light"] .lang-btn { color: #64748b; }
+    [data-theme="light"] .lang-btn.active { color: #ffffff; }
+    [data-theme="light"] .modal-card { box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18); }
+    [data-theme="light"] .add-video-slot { border-color: #cbd5e1; color: #64748b; }
+    [data-theme="light"] .action-btn { background: #f1f5f9; border-color: #cbd5e1; color: #475569; }
+    [data-theme="light"] .action-btn:hover { color: #0f172a; border-color: var(--gold-primary); }
+    [data-theme="light"] .thumb-link { background: #e2e8f0; }
+    [data-theme="light"] .form-control { background: #f8fafc; border-color: #cbd5e1; }
+    [data-theme="light"] .form-control:focus { background: #ffffff; }
+    [data-theme="light"] .toast { box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
 
     @media (max-width: 768px) {
       .video-card { grid-template-columns: 1fr; gap: 14px; }
@@ -262,6 +422,13 @@
         <button class="lang-btn active" id="btnDE" onclick="setLanguage('de')">DE</button>
         <button class="lang-btn" id="btnFR" onclick="setLanguage('fr')">FR</button>
       </div>
+
+      <!-- Theme Switcher -->
+      <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Design wechseln (Hell / Dunkel)">
+        <span class="theme-icon-wrap" id="themeIcon">☀️</span>
+        <span id="themeLabel">Hell</span>
+      </button>
+
 
       <!-- Link zu Traditionen -->
       <a href="richtungen.html" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
@@ -297,6 +464,16 @@
     <div class="hero-subtitle" id="heroSubtitle">Sammlung Reines Gewahrsein</div>
     <h1 class="hero-title" id="heroTitle">Stille, Selbsterforschung & Meditation</h1>
     <p class="hero-desc" id="heroDesc">Kuratierte geführte Meditationen, Zeugen-Erforschung und Satsangs. Ein Klick auf das Bild öffnet das Originalvideo direkt auf YouTube.</p>
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-pill">
+        <span class="progress-check-icon">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </span>
+        <span id="progressSummaryText">0 von 0 Meditationen praktiziert</span>
+      </div>
+    </div>
   </section>
 
   <!-- Hauptinhalt -->
@@ -415,7 +592,16 @@
         toastReset: "Server auf Ursprungszustand zurückgesetzt!",
         toastLogin: "Erfolgreich angemeldet!",
         toastLogout: "Bearbeitungsmodus beendet.",
-        delPrompt: "Möchten Sie dieses Video wirklich löschen?"
+        delPrompt: "Möchten Sie dieses Video wirklich löschen?",
+        statusDone: "Praktiziert",
+        statusPending: "Als praktiziert markieren",
+        markAsDone: "Klicken: Als praktiziert markieren",
+        markAsUndone: "Klicken: Häkchen wieder entfernen",
+        progressOf: "von",
+        progressPracticed: "Meditationen praktiziert",
+        themeLight: "Hell",
+        themeDark: "Dunkel",
+        themeToggleTooltip: "Design wechseln (Hell / Dunkel)"
       },
       fr: {
         brand: "Méditation & Non-Dualité",
@@ -456,7 +642,16 @@
         toastReset: "Serveur restauré à l'état initial !",
         toastLogin: "Connexion réussie !",
         toastLogout: "Mode édition désactivé.",
-        delPrompt: "Voulez-vous vraiment supprimer cette vidéo ?"
+        delPrompt: "Voulez-vous vraiment supprimer cette vidéo ?",
+        statusDone: "Pratiqué",
+        statusPending: "Marquer comme pratiqué",
+        markAsDone: "Cliquer pour marquer comme pratiqué",
+        markAsUndone: "Cliquer pour retirer la coche",
+        progressOf: "sur",
+        progressPracticed: "méditations pratiquées",
+        themeLight: "Clair",
+        themeDark: "Sombre",
+        themeToggleTooltip: "Changer de thème (Clair / Sombre)"
       }
     };
 
@@ -578,73 +773,334 @@
       document.getElementById("editCancelBtn").innerText = t.cancel;
       document.getElementById("editSaveBtn").innerText = t.saveBtn;
 
+      updateThemeUI();
       render();
     }
 
     // Standard-Datensatz
     const defaultData = [
-      {
-        id: "mooji",
-        videos: [
-          { id: "2ujnFtx6TU8", title: "Forgiveness & Deep Presence — Satsang Meditation", duration: "51 Min.", minutes: 51, desc: "Mooji führt in die heilsame Kraft des vollkommenen Vergebens und Loslassens." },
-          { id: "sfFinak31xQ", title: "The Most Powerful Meditation Exercise", duration: "48 Min.", minutes: 48, desc: "Eine knapp fünfzigminütige Führung zur Enttarnung des gedanklichen Beobachters." },
-          { id: "Esbrnzoirk4", title: "A Profound Guided Meditation ~ The Boundless Ocean of Being", duration: "45 Min.", minutes: 45, desc: "Mooji öffnet den Raum in den grenzenlosen Ozean des reinen Bewusstseins." },
-          { id: "7aktpOWlDhY", title: "Surrender to Deep Sleep with This Heartwarming Guided Meditation", duration: "40 Min.", minutes: 40, desc: "Herzerwärmende Einschlafmeditation für tiefes Loslassen." },
-          { id: "LE3adFvr6es", title: "Beyond All Ideas — Extremely Powerful Guided Meditation", duration: "35 Min.", minutes: 35, desc: "Sämtliche Vorstellungen und Urteile beiseitelegen und in der Weite ruhen." },
-          { id: "rlqVgxINFZs", title: "Enter the Silence Within — Deep Guided Meditation", duration: "36 Min.", minutes: 36, desc: "Schritt für Schritt in die unerschütterliche innere Stille eintauchen." },
-          { id: "hksrDkxMOuY", title: "Discover Profound Stillness (With Music)", duration: "30 Min.", minutes: 30, desc: "Ruhen im bereits vorhandenen Geistesfrieden, der keinerlei Anstrengung bedarf." },
-          { id: "VD7Brg0geVA", title: "A Peaceful Life Is Priceless — Beautiful Guided Meditation", duration: "28 Min.", minutes: 28, desc: "Unerschütterlich im eigenen Wesenskern ruhen ohne Gedankenkontrolle." },
-          { id: "Y9wLhV8g3Eg", title: "The Space of Being — Guided Meditation", duration: "25 Min.", minutes: 25, desc: "Hinweis auf den raumhaften Hintergrund aller Wahrnehmungen." },
-          { id: "ptVeOhCqQdU", title: "Just Be! — Rest in the Silence of Being", duration: "18 Min.", minutes: 18, desc: "Einfach nur sein, ohne Erwartungen und Projektionen." },
-          { id: "8vMEoPgg-PE", title: "You Are Life Itself — Guided Meditation", duration: "16 Min.", minutes: 16, desc: "Das Gewahrsein, dass wir niemals vom Leben getrennt waren." },
-          { id: "zwMroJgTNi4", title: "An Invitation to Freedom: Immediate Awakening for Everyone", duration: "15 Min.", minutes: 15, desc: "Moojis komprimierte Essenz der Selbsterforschung." }
+    {
+        "id": "mooji",
+        "title": "Sri Mooji — Geführte Meditationen & Selbsterforschung",
+        "badge": "Advaita Vedanta \/ Satsang",
+        "bio": "Mooji (Anthony Paul Moo-Young) ist ein weltweit verehrter Meister der Non-Dualität in der direkten Nachfolge von Sri Ramana Maharshi und Papaji. Seine Unterweisungen zielen kompromisslos darauf ab, den Geist durch direkte Selbsterforschung (Self-Inquiry) in seine wahre Quelle zurückzuführen. Anstatt sich in mentalen Konzepten oder Atemkontrollen zu verlieren, lädt Mooji dazu ein, das zeitlose, unberührbare Gewahrsein hier und jetzt unmittelbar zu erkennen. Seine geführten Meditationen zeichnen sich durch tiefe Sanftheit, liebevolle Präsenz und radikales Loslassen jeglicher Identifikation mit der Person aus. Die nachfolgenden Meditationen sind strikt nach ihrer Laufzeit geordnet – beginnend mit den intensivsten, langen Einheiten über 30 Minuten.",
+        "videos": [
+            {
+                "id": "2ujnFtx6TU8",
+                "title": "Forgiveness & Deep Presence — Satsang Meditation",
+                "duration": "51 Min.",
+                "minutes": 51,
+                "desc": "Mooji führt in einer über fünfzigminütigen meditativen Einkehr in die heilsame Kraft des vollkommenen Vergebens und Loslassens. Das Herz wird von alten emotionalen Lasten befreit, um vollkommen im reinen Raum des Seins zu verweilen."
+            },
+            {
+                "id": "sfFinak31xQ",
+                "title": "The Most Powerful Meditation Exercise",
+                "duration": "48 Min.",
+                "minutes": 48,
+                "desc": "Eine tiefgreifende, knapp fünfzigminütige Führung zur Enttarnung des gedanklichen Beobachters und der falschen Ich-Identität. Mooji nimmt den Suchenden an die Hand, um das ruhevolle, unbewegliche Bewusstsein dahinter direkt erfahrbar zu machen."
+            },
+            {
+                "id": "Esbrnzoirk4",
+                "title": "A Profound Guided Meditation ~ The Boundless Ocean of Being",
+                "duration": "45 Min.",
+                "minutes": 45,
+                "desc": "Mooji öffnet den Raum in den grenzenlosen Ozean des reinen Bewusstseins, in dem Namen, Körper und persönliche Sorgen verblassen. Diese intensive Praxis offenbart das ungeborene Selbst als ewige Stille jenseits aller vergänglichen Formen."
+            },
+            {
+                "id": "LE3adFvr6es",
+                "title": "Beyond All Ideas — Extremely Powerful Guided Meditation",
+                "duration": "35 Min.",
+                "minutes": 35,
+                "desc": "Unterlegt mit meditativer Musik leitet Mooji dazu an, sämtliche Vorstellungen, Urteile und Identitätskonzepte vollständig beiseitezulegen. Es entsteht eine unvergleichliche Weite im Geist, die selbst tiefsitzende Ängste mühelos auflöst."
+            },
+            {
+                "id": "rlqVgxINFZs",
+                "title": "Enter the Silence Within — Deep Guided Meditation",
+                "duration": "36 Min.",
+                "minutes": 36,
+                "desc": "Mooji begleitet den Praktizierenden Schritt für Schritt in die unerschütterliche innere Stille, die von äußeren Geräuschen vollkommen unberührt bleibt. Eine zeitlose Anleitung zum Eintauchen in das reine Zeugensein."
+            },
+            {
+                "id": "f74h_LnZflc",
+                "title": "Powerful Mooji Guided Meditation — Inner Silence",
+                "duration": "31 Min.",
+                "minutes": 31,
+                "desc": "Mit sanften Hinweisen führt Mooji über die Grenzen des Verstandes hinaus in das unaussprechliche Schweigen des Herzens. Eine transformative Sitzung, um emotionale Turbulenzen in reinen Frieden zu verwandeln."
+            },
+            {
+                "id": "hksrDkxMOuY",
+                "title": "Discover Profound Stillness (With Music)",
+                "duration": "30 Min.",
+                "minutes": 30,
+                "desc": "Mooji lädt dazu ein, im bereits vorhandenen Geistesfrieden zu ruhen, der keinerlei Anstrengung oder spiritueller Arbeit bedarf. Das Nervensystem entspannt sich tiefgreifend durch die Erkenntnis der mühelosen Gegenwärtigkeit."
+            },
+            {
+                "id": "VD7Brg0geVA",
+                "title": "A Peaceful Life Is Priceless — Beautiful Guided Meditation",
+                "duration": "28 Min.",
+                "minutes": 28,
+                "desc": "Eine intime Betrachtung über den unschätzbaren Wert von innerem Geistesfrieden mitten in weltlichen Unsicherheiten. Mooji zeigt Wege auf, wie man unerschütterlich im eigenen Wesenskern ruht, ohne den Gedankenstrom kontrollieren zu müssen."
+            },
+            {
+                "id": "Y9wLhV8g3Eg",
+                "title": "The Space of Being — Guided Meditation",
+                "duration": "25 Min.",
+                "minutes": 25,
+                "desc": "In dieser klassischen Führung weist Mooji auf den raumhaften Hintergrund aller Wahrnehmungen hin. Man erfährt sich selbst nicht als die Gedanken, sondern als das bewusste Element, in dem alles erscheint und vergeht."
+            },
+            {
+                "id": "WwZHI9XpKuI",
+                "title": "Overflowing Love — Heart Guided Meditation",
+                "duration": "24 Min.",
+                "minutes": 24,
+                "desc": "Diese Meditation verbindet tiefe non-duale Stille mit dem fühlbaren Erblühen bedingungsloser Liebe im Herzenszentrum. Sie löst das Gefühl von Isolation auf und lässt die Einheit allen Seins spürbar werden."
+            },
+            {
+                "id": "WGdWwIZxC2c",
+                "title": "Detach, Let Go and Fully Be",
+                "duration": "22 Min.",
+                "minutes": 22,
+                "desc": "Moojibaba zeigt, wie man von allen mentalen Management-Versuchen zurücktritt, bis nichts mehr kontrolliert, sondern nur noch wahrgenommen wird. Ein befreiender Zustand vollkommener Spontaneität stellt sich von selbst ein."
+            },
+            {
+                "id": "I1ECHPyPhtM",
+                "title": "The Call From Within — Guided Meditation with Mooji",
+                "duration": "22 Min.",
+                "minutes": 22,
+                "desc": "Eine Einladung, dem inneren Ruf der Seele zu folgen und alle weltlichen Rollen an der Garderobe des Bewusstseins abzugeben. Sie erinnert daran, dass wahrer Friede kein Ziel ist, sondern unsere ursprüngliche Natur."
+            },
+            {
+                "id": "6Z6BBaHejNc",
+                "title": "Emptiness Is Effortless — Guided Meditation",
+                "duration": "20 Min.",
+                "minutes": 20,
+                "desc": "Mooji verdeutlicht, dass innere Leere kein Vakuum des Mangels ist, sondern erfüllte Gegenwärtigkeit, die keinerlei Kraftanstrengung benötigt. Eine wunderbare Entlastung für alle, die das Meditieren als anstrengend empfinden."
+            },
+            {
+                "id": "ptVeOhCqQdU",
+                "title": "Just Be! — Rest in the Silence of Being",
+                "duration": "18 Min.",
+                "minutes": 18,
+                "desc": "Einfach nur sein, ohne Erwartungen, ohne Projektionen und ohne den Drang nach dem nächsten Moment. Mooji zeigt, wie das vollständige Einhalten sofortige Gelassenheit und Klarheit schenkt."
+            },
+            {
+                "id": "8vMEoPgg-PE",
+                "title": "You Are Life Itself — Guided Meditation",
+                "duration": "16 Min.",
+                "minutes": 16,
+                "desc": "Eine feinsinnige Führung in das Gewahrsein, dass wir niemals vom Leben getrennt waren, sondern das Leben selbst sind. Alles entfaltet sich in vollkommener natürlicher Ordnung, sobald das Eingreifen des Verstandes aufhört."
+            },
+            {
+                "id": "zwMroJgTNi4",
+                "title": "An Invitation to Freedom: Immediate Awakening for Everyone",
+                "duration": "15 Min.",
+                "minutes": 15,
+                "desc": "Moojis komprimierte Essenz der Selbsterforschung, um in wenigen klaren Schritten die Identifikation mit dem Verstand zu durchschauen. Ein direkter Einstieg in die zeitlose Freiheit des reinen Geistes."
+            },
+            {
+                "id": "YNqOkfzTjVQ",
+                "title": "Peaceful in the Natural State (10 Minutes Meditation)",
+                "duration": "10 Min.",
+                "minutes": 10,
+                "desc": "Eine kompakte, zehnminütige Sitzung für den Tag, um das Bewusstsein zu zentrieren und im natürlichen Zustand der Ruhe zu verweilen. Ideal für die Pause zwischendurch, um neue Klarheit zu gewinnen."
+            }
         ]
-      },
-      {
-        id: "nisargadatta",
-        videos: [
-          { id: "-k1dM2QKYts", title: "„I Am“ — A Guided Meditation", duration: "16 Min.", minutes: 16, desc: "Reise zur Quelle des Daseinsgefühls vor jeder sprachlichen Benennung." },
-          { id: "-AAJhRS17Sc", title: "Living Without the Personal ‘Me’", duration: "19 Min.", minutes: 19, desc: "Wie das Leben spontan und angstfrei ohne das Diktat eines fiktiven Ichs fließt." },
-          { id: "4fNBf0YyN64", title: "Moving Beyond the Witness", duration: "22 Min.", minutes: 22, desc: "Überschreitet selbst den Beobachter und verweist auf das Absolute." }
+    },
+    {
+        "id": "nisargadatta",
+        "title": "Sri Nisargadatta Maharaj — Das reine „Ich Bin“",
+        "badge": "Klassisches Advaita",
+        "bio": "Sri Nisargadatta Maharaj war einer der einflussreichsten Weisen Indiens im 20. Jahrhundert und lehrte in Mumbai ohne jegliches Dogma. Seine Botschaft fordert dazu auf, vor alle Gedanken und Konzepte zurückzutreten und sich ausschließlich im reinen Gefühl 'Ich bin' zu verankern. Er betonte unermüdlich, dass das gesamte persönliche Leiden aus der irrigen Annahme stammt, ein sterblicher Körper-Geist-Organismus zu sein. Durch das kontinuierliche Verweilen im Zustand vor der Benennung löst sich die Illusion der Getrenntheit auf. Seine klaren, schneidenden Worte sind radikale Wegweiser zur Erkenntnis des ungeborenen Absoluten (Parabrahman).",
+        "videos": [
+            {
+                "id": "-k1dM2QKYts",
+                "title": "„I Am“ — A Guided Meditation",
+                "duration": "16 Min.",
+                "minutes": 16,
+                "desc": "Eine meditative Reise zur Quelle des Daseinsgefühls vor jeder sprachlichen Benennung oder Erinnerung. Sie hilft dabei, den denkenden Verstand hinter sich zu lassen und im puren Fundament des Zeugen anzukommen."
+            },
+            {
+                "id": "-AAJhRS17Sc",
+                "title": "Living Without the Personal ‘Me’",
+                "duration": "19 Min.",
+                "minutes": 19,
+                "desc": "Dieses Video fasst die Einsichten Maharajs zusammen, wie das Leben spontan und angstfrei ohne das Diktat eines fiktiven Ichs fließt. Es nimmt dem Suchenden die Furcht vor Kontrollverlust und führt in authentischen Frieden."
+            },
+            {
+                "id": "4fNBf0YyN64",
+                "title": "Moving Beyond the Witness",
+                "duration": "22 Min.",
+                "minutes": 22,
+                "desc": "Eine tiefergehende Unterweisung, die selbst die Funktion des Beobachters überschreitet und auf das unmanifestierte Absolute verweist. Eine herausfordernde Kontemplation für erfahrene Meditierende auf dem Weg jenseits aller Polarität."
+            },
+            {
+                "id": "hwBuwQiLXvU",
+                "title": "Nisargadatta's 2-Step Formula For Awakening",
+                "duration": "14 Min.",
+                "minutes": 14,
+                "desc": "Die direkte Praxisformel Maharajs: Das sofortige Zurücktreten ins reine Gewahrsein und das mutige Ablegen aller personhaften Attribute. Ohne Umschweife verhilft sie zu sofortiger innerer Klarheit im Alltag."
+            }
         ]
-      },
-      {
-        id: "ramana",
-        videos: [
-          { id: "vZ_Z8QA9HYg", title: "Why Silence Is the Fastest Way to Ego Death", duration: "17 Min.", minutes: 17, desc: "Warum bewusste Stille das gedankliche Ego am schnellsten auflöst." },
-          { id: "eRMk5UgQ__M", title: "How to Be a Witness at the Right Time?", duration: "15 Min.", minutes: 15, desc: "Praktische Hinweise für den Alltag beim Auftreten heftiger Gefühle." }
+    },
+    {
+        "id": "ramana",
+        "title": "Bhagavan Sri Ramana Maharshi — Stille & Vichara",
+        "badge": "Atma-Vichara \/ Arunachala",
+        "bio": "Sri Ramana Maharshi verbrachte sein ganzes Erwachsenenleben am heiligen Berg Arunachala und gilt als Sinnbild höchster spiritueller Reinheit. Im Zentrum seiner Lehre steht die Selbsterforschung (Atma-Vichara) über die existenzielle Frage 'Wer bin ich?'. Ramana zeigte auf, dass das Ego lediglich ein Gedanke ist, der entsteht, wenn das Bewusstsein sich fälschlicherweise an Formen heftet. Richtet man die Aufmerksamkeit rückhaltlos auf die Wurzel dieses Ich-Gedankens, fällt das Schein-Ich in das spirituelle Herz zurück. Seine stärkste und bis heute spürbare Übertragung war die lebendige Stille.",
+        "videos": []
+    },
+    {
+        "id": "eckhart",
+        "title": "Eckhart Tolle — Die Kraft der Gegenwart",
+        "badge": "Achtsamkeit & Gegenwärtigkeit",
+        "bio": "Eckhart Tolle ist einer der bekanntesten spirituellen Wegweiser der Gegenwart und Autor weltweiter Bestseller. Seine Lehre übersetzt zeitlose Wahrheiten des Ostens in eine erfrischend klare, unprätentiöse Sprache für den modernen Menschen. Er zeigt, wie der unaufhörliche Zwang zum Denken chronisches Leiden erzeugt und wie man den Schmerzkörper durch achtsames Fühlen auflöst. Besonderes Gewicht legt er auf das Bewohnen des inneren Körpers als Tor zur Gegenwärtigkeit. Im gegenwärtigen Moment, so Tolle, existiert kein einziges psychologisches Problem.",
+        "videos": [
+            {
+                "id": "We8PLL5WSH0",
+                "title": "Nothing in This World Can Touch the Real You",
+                "duration": "14 Min.",
+                "minutes": 14,
+                "desc": "Eckhart Tolle differenziert zwischen den wechselhaften Lebenssituationen und dem unverletzlichen Bewusstsein dahinter. Eine wohltuende Erinnerung daran, dass Lebenskrisen niemals den wahren Wesenskern antasten können."
+            },
+            {
+                "id": "iUKDuVRY_D8",
+                "title": "Why Did Eckhart Awaken?",
+                "duration": "18 Min.",
+                "minutes": 18,
+                "desc": "Eckhart berichtet über die Nacht seines dramatischen Erwachens und den Zusammenbruch seines gedanklich konstruierten Ichs. Er veranschaulicht eindrucksvoll, wie seelischer Tiefschmerz zum Durchbruch ins Bewusstsein werden kann."
+            }
         ]
-      },
-      {
-        id: "eckhart",
-        videos: [
-          { id: "We8PLL5WSH0", title: "Nothing in This World Can Touch the Real You", duration: "14 Min.", minutes: 14, desc: "Erinnerung daran, dass Lebenskrisen niemals das reine Bewusstsein berühren." },
-          { id: "iUKDuVRY_D8", title: "Why Did Eckhart Awaken?", duration: "18 Min.", minutes: 18, desc: "Eckhart berichtet über die Nacht seines dramatischen Erwachens." }
+    },
+    {
+        "id": "buddhism",
+        "title": "Buddhistische Praxis & Dharma-Lehre",
+        "badge": "Zen \/ Vipassana \/ Achtsamkeit",
+        "bio": "Dieser Bereich vereint die Weisheitstraditionen des Zen-Buddhismus und der klassischen Einsichtsmeditation (Vipassana). Tatsudo Nicole Baden vermittelt präzise Schulung in Geisteshaltung, Atembewusstsein und den Abbau mentaler Widerstände im Zen. Jack Kornfield ergänzt dies durch jahrzehntelange Erfahrung als Mönch und Psychologe mit tiefem Fokus auf Vergebung und Mitgefühl. Anstatt unangenehme Gefühle zu unterdrücken, wird hier das nicht-wertende, wohlwollende Beobachten praktiziert. Dieser Weg schenkt ethische Festigkeit, emotionale Heilung und heitere Gelassenheit im täglichen Leben.",
+        "videos": [
+            {
+                "id": "4uRTZMFpNXM",
+                "title": "One Practice That Changes Everything In Meditation (Tatsudo Nicole Baden)",
+                "duration": "26 Min.",
+                "minutes": 26,
+                "desc": "Ein tiefgehender Zen-Vortrag über den fundamentalen Haltungswechsel bei der Meditationspraxis. Es wird gezeigt, wie man den Kampf gegen aufsteigende Gedanken beendet und stattdessen in müheloser Klarheit verweilt."
+            },
+            {
+                "id": "WQt1nG86cp4",
+                "title": "You Are Not Your Thoughts (Tatsudo Nicole Baden)",
+                "duration": "21 Min.",
+                "minutes": 21,
+                "desc": "Eine buddhistische Differenzierung zwischen automatischer Gedankenproduktion und dem Raum, der diese Gedanken wahrnimmt. Praktische Hinweise eröffnen neue Wahlfreiheit im Umgang mit negativen Denkgewohnheiten."
+            },
+            {
+                "id": "p-mkDowWXKk",
+                "title": "Why Willpower Fails – And What Works Instead (Tatsudo Nicole Baden)",
+                "duration": "23 Min.",
+                "minutes": 23,
+                "desc": "Warum reine Willenskraft bei der Geistesschulung oft scheitert und wie achtsames Erkennen die Anspannung dauerhaft löst. Eine heilsame Alternative zu Selbstoptimierungsdruck und mentaler Strenge."
+            },
+            {
+                "id": "WIoHD4PbUeA",
+                "title": "The Most Basic Truths: Gateways to Freedom (Jack Kornfield)",
+                "duration": "45 Min.",
+                "minutes": 45,
+                "desc": "Ein warmherziger Dharma-Talk über Vergänglichkeit, Herzensöffnung und die universelle Freiheit des Geistes. Jack Kornfield verbindet Geschichten und geführte Übungen zu einem inspirierenden Gesamterlebnis."
+            }
         ]
-      },
-      {
-        id: "buddhism",
-        videos: [
-          { id: "4uRTZMFpNXM", title: "One Practice That Changes Everything In Meditation (Tatsudo Nicole Baden)", duration: "26 Min.", minutes: 26, desc: "Den Kampf gegen Gedanken beenden und in Klarheit verweilen." },
-          { id: "WQt1nG86cp4", title: "You Are Not Your Thoughts (Tatsudo Nicole Baden)", duration: "21 Min.", minutes: 21, desc: "Differenzierung zwischen Gedanke und dem Raum, der ihn wahrnimmt." },
-          { id: "WIoHD4PbUeA", title: "The Most Basic Truths: Gateways to Freedom (Jack Kornfield)", duration: "45 Min.", minutes: 45, desc: "Dharma-Talk über Vergänglichkeit, Herzensöffnung und Freiheit." }
+    },
+    {
+        "id": "somatic",
+        "title": "Spezifische Themen: Angstlösung & Nervensystem",
+        "badge": "Somatik \/ Schlaf \/ Frequenzen",
+        "bio": "Diese Sektion widmet sich der physiologischen und somatischen Dimension innerer Unruhe und des Gedankenkreisens. Oftmals sind Ängste und Stress nicht rein psychologisch, sondern im autonomen Nervensystem fest verankert. Durch sanfte vagale Atemübungen, somatische Entladungen und beruhigende Frequenzen wird der Körper in die Parasympathikus-Aktivierung gelenkt. Dies schafft die notwendige körperliche Sicherheitsbasis, auf der Meditation erst mühelos gedeihen kann. Die folgenden Übungen bieten sofortige Linderung bei akutem Grübeln oder Schlafstörungen.",
+        "videos": [
+            {
+                "id": "1vx8iUvfyCY",
+                "title": "Guided Meditation for Detachment From Over-Thinking",
+                "duration": "20 Min.",
+                "minutes": 20,
+                "desc": "Gezielte Führung zur schnellen Entlastung bei kreisenden Sorgen, OCD-Tendenzen und innerer Getriebenheit. Sie bringt die mentale Energie aus dem Kopf zurück in die erdende Wahrnehmung des Körpers."
+            },
+            {
+                "id": "o2N-bVy78OA",
+                "title": "How to Permanently Remove Fear From The Body",
+                "duration": "18 Min.",
+                "minutes": 18,
+                "desc": "Eine somatische Vorgehensweise, um Angstgefühle als reine Körperempfindungen zuzulassen und zu entladen. Anstatt Ängste zu analysieren, erfährt das Nervensystem, dass der aktuelle Moment vollkommen sicher ist."
+            },
+            {
+                "id": "sTZQ1ye9vRM",
+                "title": "This Breathing Exercise Reset My Nervous System",
+                "duration": "11 Min.",
+                "minutes": 11,
+                "desc": "Eine unkomplizierte Atemtechnik zur sofortigen Dämpfung überhöhter Herzfrequenz und mentaler Anspannung. Ideal zur Vorbereitung auf tiefe Meditation oder als Abendritual vor dem Einschlafen."
+            },
+            {
+                "id": "HV16WQLA5Nw",
+                "title": "Give Me 13 Minutes and You'll Silence Your Mind",
+                "duration": "13 Min.",
+                "minutes": 13,
+                "desc": "Eine fokussierte Meditationspraxis für den schnellen mentalen Reset während des Arbeitstages. Sie beruhigt die Hirnströme und stellt in kürzester Zeit volle innere Balance wieder her."
+            }
         ]
-      },
-      {
-        id: "somatic",
-        videos: [
-          { id: "1vx8iUvfyCY", title: "Guided Meditation for Detachment From Over-Thinking", duration: "20 Min.", minutes: 20, desc: "Schnelle Entlastung bei kreisenden Sorgen und mentalem Stress." },
-          { id: "o2N-bVy78OA", title: "How to Permanently Remove Fear From The Body", duration: "18 Min.", minutes: 18, desc: "Somatische Praxis, um Angstgefühle auf Körperebene zu entladen." }
+    },
+    {
+        "id": "shorts",
+        "title": "⚡ Kurzvideos & Impulse (< 5 Minuten)",
+        "badge": "Micro-Practices \/ Shorts",
+        "bio": "Diese Kategorie ist allen Kurzformaten und YouTube-Shorts unter 5 Minuten gewidmet. Sie erfordern keine Sitzhaltung und dienen als sofortige Erinnerung an das Gewahrsein mitten im geschäftigen Alltag. Ein 60-Sekunden-Impuls genügt oft, um den Autopiloten des Grübelns zu durchbrechen und das Nervensystem zu erden. Nutzen Sie diese Videos als Mini-Pausen zwischen Aufgaben oder zur Neuausrichtung vor wichtigen Entscheidungen.",
+        "videos": [
+            {
+                "id": "x7C7lsyi6yQ",
+                "title": "Mooji: Step Into the Witness & Quiet the Mind",
+                "duration": "1 Min.",
+                "minutes": 1,
+                "desc": "Mooji erinnert in 60 Sekunden daran, wie man aus dem Gedankenstrom heraustritt und als Zeuge sofortigen Frieden erfährt. Ein kraftvoller Moment der Stille für zwischendurch."
+            },
+            {
+                "id": "OHzjZWJMgLY",
+                "title": "How to See Through Fear (The 'Screen' of Awareness)",
+                "duration": "1 Min.",
+                "minutes": 1,
+                "desc": "Eine prägnante Analogie: Angst ist nur eine Szene auf der Leinwand des Bewusstseins, während die Leinwand stets unberührt bleibt. Schnelle De-Identifikation von Panikgefühlen."
+            },
+            {
+                "id": "7mHgADTjtLc",
+                "title": "Non-Duality Explained Simply in 1-Min",
+                "duration": "1 Min.",
+                "minutes": 1,
+                "desc": "Die Kernbotschaft der Non-Dualität auf den Punkt gebracht: Trennung ist eine optische Täuschung des Verstandes. Perfekt für einen kurzen Perspektivwechsel."
+            },
+            {
+                "id": "uDLNwVTKKT4",
+                "title": "The Simple Breathing Shift That Stops Overthinking",
+                "duration": "1 Min.",
+                "minutes": 1,
+                "desc": "Ein sofort anwendbarer physiologischer Atemimpuls, der die Sauerstoff-Kohlendioxid-Balance reguliert und das Gedankenkreisen stoppt."
+            },
+            {
+                "id": "Si3P-JrJibA",
+                "title": "The Most Powerful Thing to Say Before You Fall Asleep",
+                "duration": "1 Min.",
+                "minutes": 1,
+                "desc": "Ein prägnanter innerer Leitsatz zum vollständigen Loslassen des Tages vor dem Einschlafen. Schafft Frieden im Geist vor der Nachtruhe."
+            },
+            {
+                "id": "7ptbehHzMlA",
+                "title": "Learn To OBSERVE Without Attachment",
+                "duration": "1 Min.",
+                "minutes": 1,
+                "desc": "Eine knappe Anleitung zur Kunst des reinen Zuschauens, ohne reflexartig auf Reize zu reagieren. Bringt augenblicklich Souveränität zurück."
+            },
+            {
+                "id": "FiqYPS4jUwU",
+                "title": "The Most Powerful 4 Affirmations Before Falling Asleep",
+                "duration": "1 Min.",
+                "minutes": 1,
+                "desc": "Vier gezielte Glaubenssätze für das Unterbewusstsein, um Sorgen abzugeben und in tiefer Gelassenheit einzuschlafen."
+            }
         ]
-      },
-      {
-        id: "shorts",
-        videos: [
-          { id: "x7C7lsyi6yQ", title: "Mooji: Step Into the Witness & Quiet the Mind", duration: "1 Min.", minutes: 1, desc: "In 60 Sekunden aus dem Gedankenstrom in das Zeugensein treten." },
-          { id: "7mHgADTjtLc", title: "Non-Duality Explained Simply in 1-Min", duration: "1 Min.", minutes: 1, desc: "Die Kernbotschaft der Non-Dualität kompakt zusammengefasst." }
-        ]
-      }
-    ];
+    }
+];
 
     async function loadDataFromHost() {
       try {
@@ -657,10 +1113,31 @@
             appData = defaultData;
           }
         } else {
+          try {
+            const r2 = await fetch("data.json?t=" + Date.now());
+            if (r2.ok) {
+              const d2 = await r2.json();
+              if (Array.isArray(d2) && d2.length > 0) {
+                appData = d2;
+                setLanguage(currentLang);
+                return;
+              }
+            }
+          } catch(e) {}
           appData = defaultData;
         }
       } catch (err) {
-        console.error("Ladefehler:", err);
+        try {
+          const r2 = await fetch("data.json?t=" + Date.now());
+          if (r2.ok) {
+            const d2 = await r2.json();
+            if (Array.isArray(d2) && d2.length > 0) {
+              appData = d2;
+              setLanguage(currentLang);
+              return;
+            }
+          }
+        } catch(e) {}
         appData = defaultData;
       }
       setLanguage(currentLang);
@@ -694,11 +1171,100 @@
       }
     }
 
+    let currentTheme = localStorage.getItem("app_theme") || "light";
+
+    function getCompletedMap() {
+      try {
+        return JSON.parse(localStorage.getItem("completed_meditations") || "{}");
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function toggleCompleted(vidId, ev) {
+      if (ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+      }
+      const map = getCompletedMap();
+      const willBeDone = !map[vidId];
+      if (willBeDone) {
+        map[vidId] = true;
+      } else {
+        delete map[vidId];
+      }
+      localStorage.setItem("completed_meditations", JSON.stringify(map));
+
+      const t = i18n[currentLang];
+      const cards = document.querySelectorAll(`.video-card[data-video-id="${vidId}"]`);
+      cards.forEach(card => {
+        card.classList.toggle("is-completed", willBeDone);
+        const btn = card.querySelector(".check-pill");
+        if (btn) {
+          btn.classList.toggle("is-checked", willBeDone);
+          btn.setAttribute("aria-pressed", willBeDone ? "true" : "false");
+          btn.title = willBeDone ? t.markAsUndone : t.markAsDone;
+          const textElem = btn.querySelector(".check-pill-text");
+          if (textElem) {
+            textElem.innerText = willBeDone ? t.statusDone : t.statusPending;
+          }
+        }
+      });
+
+      updateProgressSummary();
+    }
+
+    function updateProgressSummary() {
+      const map = getCompletedMap();
+      let totalCount = 0;
+      let doneCount = 0;
+      appData.forEach(sec => {
+        (sec.videos || []).forEach(v => {
+          totalCount++;
+          if (map[v.id]) doneCount++;
+        });
+      });
+
+      const summaryElem = document.getElementById("progressSummaryText");
+      if (summaryElem) {
+        const t = i18n[currentLang];
+        summaryElem.innerText = `${doneCount} ${t.progressOf} ${totalCount} ${t.progressPracticed}`;
+      }
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute("data-theme") || "light";
+      const nextTheme = current === "light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", nextTheme);
+      localStorage.setItem("app_theme", nextTheme);
+      currentTheme = nextTheme;
+      updateThemeUI();
+    }
+
+    function updateThemeUI() {
+      const theme = document.documentElement.getAttribute("data-theme") || "light";
+      const btn = document.getElementById("themeToggleBtn");
+      const icon = document.getElementById("themeIcon");
+      const label = document.getElementById("themeLabel");
+      const t = i18n[currentLang] || i18n.de;
+      if (btn) btn.title = t.themeToggleTooltip;
+      if (icon) {
+        if (theme === "light") {
+          icon.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+          if (label) label.innerText = t.themeLight;
+        } else {
+          icon.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+          if (label) label.innerText = t.themeDark;
+        }
+      }
+    }
+
     function render() {
       const container = document.getElementById("sectionsContainer");
       container.innerHTML = "";
       const t = i18n[currentLang];
       const localizedSecs = sectionTexts[currentLang];
+      const completedMap = getCompletedMap();
 
       appData.forEach(section => {
         const secMeta = localizedSecs[section.id] || { title: section.id, badge: "", bio: "" };
@@ -731,16 +1297,38 @@
           const ytUrl = `https://www.youtube.com/watch?v=${video.id}`;
           const thumbUrl = `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`;
 
+          const isDone = !!completedMap[video.id];
+
           const card = document.createElement("div");
-          card.className = "video-card";
+          card.className = "video-card" + (isDone ? " is-completed" : "");
+          card.setAttribute("data-video-id", video.id);
           card.innerHTML = `
             <a href="${ytUrl}" target="_blank" rel="noopener noreferrer" class="thumb-link" title="YouTube">
               <img src="${thumbUrl}" alt="${video.title}" class="thumb-img" loading="lazy">
               <div class="play-badge"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+              <div class="thumb-check-badge" title="${t.statusDone}">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
               <div class="yt-target-indicator"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M10 9v6l5-3-5-3z"/></svg> YouTube</div>
             </a>
             <div class="video-info">
-              <div class="video-meta-row"><span class="${pillClass}">⏱ ${video.duration}</span></div>
+              <div class="video-meta-row">
+                <span class="${pillClass}">⏱ ${video.duration}</span>
+                <button type="button" 
+                        class="check-pill ${isDone ? 'is-checked' : ''}" 
+                        onclick="toggleCompleted('${video.id}', event)" 
+                        title="${isDone ? t.markAsUndone : t.markAsDone}"
+                        aria-pressed="${isDone}">
+                  <span class="check-box">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </span>
+                  <span class="check-pill-text">${isDone ? t.statusDone : t.statusPending}</span>
+                </button>
+              </div>
               <h3 class="video-title"><a href="${ytUrl}" target="_blank" rel="noopener noreferrer">${video.title}</a></h3>
               <p class="video-desc">${video.desc}</p>
               <div class="card-footer">
@@ -758,6 +1346,7 @@
           listContainer.appendChild(card);
         });
       });
+      updateProgressSummary();
     }
 
     function openModal(id) { document.getElementById(id).classList.add("active"); }
